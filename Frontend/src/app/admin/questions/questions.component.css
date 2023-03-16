@@ -1,0 +1,17 @@
+
+  .fa-trash{
+    border: none;
+    color: cadetblue;
+    padding: 0.5rem;
+  }
+
+  table {
+    width :100%;
+    border-collapse :collapse;
+    }
+    
+    table th, table td {
+    padding :10px;
+    text-align :left;
+    border :1px solid #9E9E9E;
+    }

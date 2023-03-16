@@ -1,0 +1,46 @@
+
+.section-1{
+    background-color: azure;
+    width: 100%;
+    display: flex;
+    padding: 10px;
+    justify-content: space-between;
+}
+
+.info{
+    display: flex;
+    flex-direction: column;
+
+}
+.metadata{
+    display: flex;
+    justify-content: space-between;
+}
+.time{
+    display: flex;
+    justify-content: space-between;
+    
+}
+.answer{
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    padding: 10px;
+    background-color: azure;
+    width: 100%;
+}
+.meta{
+    display: flex;
+    justify-content: space-between;    
+}
+.theanswer{
+    display: flex;
+    gap: 10px;
+}
+.votes{
+    gap: 5px;
+}
+.upvote .fa-arrow-up, .downvote .fa-arrow-down{
+    color: #CC6222;
+    font-size: 2rem;
+}

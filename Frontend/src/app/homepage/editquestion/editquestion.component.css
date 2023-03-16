@@ -1,0 +1,30 @@
+form{
+display: flex;
+flex-direction: column;
+gap:10px;
+width:70%;
+justify-content: center;
+/* align-items: center; */
+}
+form h3{
+text-align: center;
+color:rgb(204, 98, 34);
+}
+form input{
+    height: 40px;
+}
+form label{
+    font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+    color:rgb(204, 98, 34)
+}
+button{
+    height: 30px;
+    width: 100px;
+    border: 0.5em;
+    border-radius: 7px;
+    background-color: #CC6222;
+}
+
+button p{
+    text-align: center;
+}

@@ -1,0 +1,40 @@
+<div id="regist">
+
+    <form action="" [formGroup]="form" (ngSubmit)="submitData()">
+
+        <h3>REGISTER ACCOUNT HERE:</h3>
+        <div class="group">
+            <input type="text" name="" id="" placeholder="UserName" formControlName="username">
+            <span class="error" *ngIf="!form.get('username')?.valid && form.get('username')?.touched">
+                <br> UserName is needed</span>
+        </div>
+
+        <div class="group">
+            <input type="email" name="" id="" placeholder="Email Address" formControlName="email">
+            <span class="error" *ngIf="!form.get('email')?.valid && form.get('email')?.touched">
+                <span class="error" *ngIf="form.get('email')!.errors!['required']"> <br>
+                     Please Input an
+                    Email</span>
+                <span class="error" *ngIf="form.get('email')!.errors!['email']"> <br>
+                     Enter a Valid
+                    Email</span>
+            </span>
+        </div>
+
+        <div class="group">
+            <input type="password" name="" id="" placeholder="Password" formControlName="password">
+            <span class="error" *ngIf="!form.get('password')?.valid && form.get('password')?.touched"> <br> Please
+                Enter a Valid Password</span>
+        </div>
+        <div class="group">
+            <input type="password" name="" id="" placeholder="Confirm Password" formControlName="confirmPassword">
+        </div>
+
+        <button class="regbutton">Register</button>
+    </form>
+
+
+    <div id="buttns">
+        <a href="">Return to Home</a>
+    </div>
+</div>

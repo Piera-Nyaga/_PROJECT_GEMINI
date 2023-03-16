@@ -1,0 +1,47 @@
+#regist {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background-color: darkgrey;
+    width: 700px;
+    border-radius: 7px;
+    /* padding: 30px; */
+    height: 90%;
+    margin-top: 50px;
+    margin-left: 300px;
+}
+form{
+    display: flex;
+    flex-direction: column;
+    width: 90%;
+    gap: 30px;     
+}
+
+form h3{
+    text-align: center;
+    padding-top: 10px;
+}
+
+form input {
+    height: 35px;
+    width: 90%;
+    border: 0.5em;
+    border-radius: 7px;
+    padding: 5px;
+
+}
+
+.regbutton {
+    height: 30px;
+    width: 100px;
+    border: 0.5em;
+    border-radius: 7px;
+    background-color: #CC6222;
+}
+#buttns{
+    padding-bottom: 19px;
+}
+span{
+    color: red;
+}

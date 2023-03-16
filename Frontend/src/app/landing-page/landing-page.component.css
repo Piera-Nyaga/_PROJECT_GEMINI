@@ -1,0 +1,115 @@
+.welcome{
+    padding-left: 30px;
+}
+.welcome h1{
+   color: white;
+}
+
+button{
+    border: 0.4em;
+    height: 50px;
+    width: 120px;
+    border-radius: 7px;
+    background-color: #CC6222;
+    color: white;
+    
+}
+.hero{
+    height:600px;
+    /* background-image: url(../../assets/images/hexagon.jpg); */
+    background-image: url(https://raw.githubusercontent.com/ahsanazim/slack-landing-page/master/screen_caps/main_background.jpg);
+    background-size: 100% 100%;
+    background-repeat: no-repeat;
+    margin-top: 0px;
+    display: flex;
+    flex-direction: row;
+    justify-content:center;
+    align-items: center;
+    gap: 50px;
+}
+    
+.hero .one h1{
+    color: white;
+    text-align: center;
+    font-size: 3rem;
+}
+
+.info{
+    height: 160px;
+    /* background-color: rgb(53, 74, 86); */
+    
+}
+
+.info p{
+    color: black;
+    font-size: 32px;
+    margin-top: 40px;
+    padding: 20px;
+    text-align: center;
+}
+.onebg{
+    background-color: rgba(250,250,250,255);
+    height: 300px;
+}
+.howto{
+    margin-top: 15px;
+}
+
+.use{
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+    gap: 20px;
+}
+.instructions{
+    display: flex;
+    justify-content: space-around;
+    gap: 30px;
+}
+.cards{
+    height: 130px;
+    width:200px;
+    padding: 10px;
+    text-align: center;
+    box-shadow: 0 10px 24px hsla(0, 0%, 0%, 0.05),
+0 20px 48px hsla(0, 0%, 0%, 0.05),
+0 1px 4px hsla(0, 0%, 0%, 0.1);
+    border-radius: 7px;
+}
+
+.cards h3{
+     padding-top: 30px;
+     /* color: white; */
+}
+
+.cards .fa-circle-question, .cards .fa-message, .cards .fa-comments, .cards .fa-arrow-up{
+    color: #CC6222;
+    font-size: 3rem;
+
+} 
+/* .second{
+    margin-top: 18px;
+} */
+.stats{
+    display: flex;
+    justify-content: space-around;
+    margin-top: 40px;
+    height: 200px;
+    padding-top: 40px;
+}
+
+.card1, .card2, .card3 {
+    height: 130px;
+    width:200px;
+    font-size: larger;
+
+}
+
+.card1 .fa-users,.card2 .fa-clipboard-question, .card3 .fa-message {
+    color: #CC6222;
+    font-size: 3rem;
+}
+
+.card2{
+    margin-top: -80px;
+}

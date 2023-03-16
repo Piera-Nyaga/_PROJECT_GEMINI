@@ -1,0 +1,25 @@
+.content{
+    display: flex;
+    flex-direction: column;
+    gap:20px;
+}
+
+.one{
+    background-color: white;
+    padding: 15px;
+}
+.metadata{
+    display: flex;
+    justify-content: space-between;
+}
+.time{
+    display: flex;
+    justify-content: space-between;
+    gap: 10px;
+}
+.title h3{
+    color:#0077CC;
+}
+.user h4{
+    color:#0077CC;
+}
