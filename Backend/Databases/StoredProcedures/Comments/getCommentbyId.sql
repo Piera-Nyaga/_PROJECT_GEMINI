@@ -1,0 +1,6 @@
+CREATE PROCEDURE getCommentbyId (@Id VARCHAR(100) )
+AS
+BEGIN
+
+	SELECT * FROM Comments WHERE Id = @Id
+END

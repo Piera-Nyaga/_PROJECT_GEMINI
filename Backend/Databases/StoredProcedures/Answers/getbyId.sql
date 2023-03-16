@@ -1,0 +1,6 @@
+CREATE PROCEDURE getAnswerbyId (@Id VARCHAR(100) )
+AS
+BEGIN
+
+	SELECT * FROM Answers WHERE Id = @Id
+END

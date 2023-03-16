@@ -41,8 +41,8 @@ export async function postQuestion(req: ExtendedRequest, res: Response) {
 export const getallQuestions: RequestHandler = async (req, res) => {
     try {
         const pool = await mssql.connect(sqlConfig)
-        const user: Question[] = await (await pool.request().execute('getQuestions')).recordset
-        return res.status(200).json(user)
+        const question: Question[] = await (await pool.request().execute('getQuestions')).recordset
+        return res.status(200).json(question)
     } catch (error) {
         return res.status(404).json(error)
     }

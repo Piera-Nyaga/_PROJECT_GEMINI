@@ -1,0 +1,6 @@
+CREATE PROCEDURE getallComments
+AS
+BEGIN
+
+	SELECT * FROM Comments
+END

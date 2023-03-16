@@ -46,8 +46,8 @@ catch (error) {
 export const getallusers: RequestHandler = async (req, res) => {
     try {
         const pool = await mssql.connect(sqlConfig)
-        const user: User[] = await (await pool.request().execute('getUsers')).recordset
-        return res.status(200).json(user)
+        const users: User[] = await (await pool.request().execute('getUsers')).recordset
+        return res.status(200).json(users)
     } catch (error: any) {
         return res.status(404).json(error.message)
     }
@@ -84,21 +84,18 @@ try {
 }
 }
 
-//UPDATE USERS
+//UPDATE USER
 export async function updateUser(req:ExtendedRequest, res:Response){
     try {
-
+        const id = req.params.id
         const{UserName,Email,Password} = req.body
-        // const Email=req.params
-        const email = req.params
-        // console.log(req.body);
-        
-        const user: User[] = await (await _db.exec('getUserByEmail', {email:Email} )).recordset
+
+        const user: User = await (await _db.exec('getuserbyId', { id })).recordset[0]
 
         if (req.info) {
             if(user){
                 await _db.exec('UpdateUser', {id:req.params.id, username:UserName,email:Email, password:Password})
-                const updatedUser:User=await (await  _db.exec('getUserByEmail', {email:Email})).recordset[0]
+                const updatedUser:User=await (await _db.exec('getuserbyId', { id })).recordset[0]
                 return res.status(201).json(updatedUser)
             }
         } 
