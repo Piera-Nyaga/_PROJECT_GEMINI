@@ -8,7 +8,7 @@ const questionroute =Router()
 
 questionroute.post('/post',postQuestion)
 questionroute.get('/allquestions',getallQuestions)
-questionroute.get('/onequestion/:id',getoneQuestion)
+questionroute.get('/question/:id',getoneQuestion)
 questionroute.patch('/update/:id',updateQuestion)
 questionroute.delete('/delete/:id',deleteQuestion)
 

@@ -5,7 +5,7 @@ const answerroute =Router()
 
 answerroute.post('/post',postAnswer)
 answerroute.get('/allanswers',getallAnswers)
-answerroute.get('/oneanswer/:id',getoneAnswer)
+answerroute.get('/answer/:id',getoneAnswer)
 answerroute.patch('/preferred/:id', approveAnswer)
 
 export default answerroute

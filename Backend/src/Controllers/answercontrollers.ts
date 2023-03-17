@@ -1,6 +1,5 @@
 import { RequestHandler, Request, Response } from 'express'
 import { v4 as uid } from 'uuid'
-// import sendMail from '../../../BackgroundServices/src/Helpers/email'
 import dotenv from 'dotenv'
 import path from 'path'
 import { DatabaseHelper } from '../Databasehelpers/index'
@@ -22,11 +21,7 @@ export async function postAnswer(req: ExtendedRequest, res: Response) {
         const id = uid()
         const createdAt: string = new Date().toISOString()
         const {Description, userId, questionId } = req.body
-        // const { error } = PostingSchema.validate(req.body)
-
-        // if (error) {
-        //     return res.status(422).json(error.details[0].message)
-        // }
+    
         await _db.exec('postAnswer ', { id: id, Description, userId, questionId, createdAt })
         return res.status(201).json({ message: 'Answer added' })
 
