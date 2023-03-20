@@ -73,7 +73,6 @@ export const updateQuestion = async (req: ExtendedRequest, res: Response) => {
         const { Title, Description, Code } = req.body
         //   console.log(req.body);
 
-
         const question: Question = await (await _db.exec('getquestionbyId', { id })).recordset[0]
         question.Title = req.body.Title;
         question.Description = req.body.Description;

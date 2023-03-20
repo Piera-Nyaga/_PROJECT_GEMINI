@@ -1,4 +1,4 @@
-import Joi, { ref } from 'joi'
+import Joi from 'joi'
 
 export const PostingSchema= Joi.object({
     Title:Joi.string().required().messages({

@@ -1,0 +1,5 @@
+CREATE PROCEDURE getallVotes
+AS
+BEGIN
+	SELECT * FROM Votes
+END

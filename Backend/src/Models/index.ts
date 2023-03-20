@@ -18,5 +18,6 @@ export interface DecodedData{
 export class Question{
   constructor(
     public Id:string, public Title:string , 
-      public Description:string, public Code:string, public createdAt:string, public userId?:string,  ){}
+      public Description:string, public Code:string, 
+      public createdAt:string, public userId?:string){}
 }

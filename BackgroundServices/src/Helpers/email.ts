@@ -3,7 +3,6 @@ import dotenv from 'dotenv'
 import path from 'path'
 dotenv.config({ path: path.resolve(__dirname, '../../.env') })
 
-// Creating a transport and configurations
 
 function createTransporter(config:any){
 return nodemailer.createTransport(config)

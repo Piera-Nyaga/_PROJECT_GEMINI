@@ -1,9 +1,6 @@
 import { Router } from "express";
 import { postQuestion,getallQuestions,getoneQuestion,updateQuestion,deleteQuestion } from "../Controllers/questioncontrollers";
 
-
-
-
 const questionroute =Router()
 
 questionroute.post('/post',postQuestion)

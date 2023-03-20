@@ -1,18 +1,13 @@
 import { Router } from "express";
-import { Homepage, loginUser, registerUser, getallusers,updateUser,deleteUser } from "../Controllers/authcontrollers";
-import { VerifyToken } from "../Middlewares/verify"
-
-
+import { loginUser, registerUser, getallusers,updateUser,deleteUser } from "../Controllers/authcontrollers";
 
 const authroute =Router()
 
 authroute.post('/register',registerUser)
 authroute.post('/login', loginUser)
 authroute.get('/allusers', getallusers)
-authroute.patch('/update/:email', updateUser)
+authroute.patch('/update/:id', updateUser)
 authroute.delete('/delete/:id', deleteUser)
 
-// authroute.post('/deactivateuser', deactivateuser)
-// authroute.get('/home',VerifyToken, Homepage)//protected Route
 
 export default authroute

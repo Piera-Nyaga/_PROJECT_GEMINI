@@ -27,15 +27,12 @@ for(let user of users){
     html
 };
 
-// console.log(html);
-
  try {
 await sendMail(message) 
 await pool.request().query(`UPDATE Users SET isSent =1 WHERE userId ='${user.Id}'`)
  } catch (error) {
     console.log(error);
-    
- }  
+    }  
 })
 }    
 }

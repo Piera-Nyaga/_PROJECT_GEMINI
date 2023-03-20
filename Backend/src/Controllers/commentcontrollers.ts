@@ -31,7 +31,7 @@ export async function addComment(req: ExtendedRequest, res: Response) {
     }
 }
 
-// GET ALL ANSWERS
+// GET ALL COMMENTS
 export const getallComments: RequestHandler = async (req, res) => {
     try {
         const pool = await mssql.connect(sqlConfig)
