@@ -26,8 +26,10 @@ export class AddquestionComponent implements OnInit {
     })
   }
 
-  addQuiz(){
+  submitData(){
     this.questionService.addQuiz(this.form.value).subscribe()
+    // console.log(this.form.value);
+    
     this.form.reset()
     this.router.navigate(['/home'])
 

@@ -10,9 +10,11 @@ export interface LoginUser{
     Password:string
 }
 export interface Message{
+    // token(arg0: string, token: any): unknown
     message:string
 }
 export interface LoginSuccess{
+    userId?: any
     UserName:string
     Role:string
     message:string

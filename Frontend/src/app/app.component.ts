@@ -8,7 +8,7 @@ import { AppState } from './app.state';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
-  title = 'PROJECT_X';
+  title = 'THE GATEWAY';
 
   constructor(private store:Store<AppState>){}
 }

@@ -23,13 +23,15 @@ constructor(private questionService:QuestionService, private router:Router, priv
 ngOnInit(): void {
   this.questionService.getQuiz().subscribe((questions)=>{
   this.questions=questions
-  // console.log(this.questions);
-})
+  // console.log("quesions",this.questions);
+}
+  )
   
   
 }
 
 getOneQuiz(id:string){
+  // let oneQuestion
   this.questionService.getOneQuiz(id)
 }
 

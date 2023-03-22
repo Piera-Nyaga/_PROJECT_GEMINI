@@ -1,7 +1,7 @@
 import { RequestHandler, Request, Response } from 'express'
 import { v4 as uid } from 'uuid'
 import { PostingSchema, UpdateSchema } from '../Helpers/validateQuiz'
-import { Question } from '../Models/index'
+import { Decoded, Question } from '../Models/index'
 import dotenv from 'dotenv'
 import path from 'path'
 import { DatabaseHelper } from '../Databasehelpers/index'
@@ -12,6 +12,7 @@ const _db = new DatabaseHelper()
 dotenv.config({ path: path.resolve(__dirname, '../../.env') })
 
 interface ExtendedRequest extends Request {
+    info?: Decoded
     body: { Title: string, Description: string, Code: string, userId: string }
 }
 
@@ -19,16 +20,18 @@ interface ExtendedRequest extends Request {
 //POST QUESTION
 export async function postQuestion(req: ExtendedRequest, res: Response) {
     try {
+        if(req.info){
         const id = uid()
         const createdAt: string = new Date().toISOString()
-        const { Title, Description, Code, userId } = req.body
+        const { Title, Description, Code  } = req.body
         const { error } = PostingSchema.validate(req.body)
 
         if (error) {
             return res.status(422).json(error.details[0].message)
         }
-        await _db.exec('InsertOrUpdateQuiz ', { id: id, Title: Title, Description: Description, Code: Code, userId: userId, createdAt })
+        await _db.exec('InsertOrUpdateQuiz ', { id: id, Title: Title, Description: Description, Code: Code, userId:req.info.Id, createdAt })
         return res.status(201).json({ message: 'Question Posted' })
+        }
 
     }
     catch (error) {
@@ -67,13 +70,23 @@ export const getoneQuestion = async (req: ExtendedRequest, res: Response) => {
 // GET USER QUESTIONS
 export const getUserQuestions = async (req: ExtendedRequest, res: Response) => {
     try {
-        const userId = req.params.userId
+
+        console.log(req.info);
+        
+        if(req.info){
+        const userId = req.info.Id
+        // console.log(userId)
         const questions: Question[] = await (await _db.exec('getUserQuestions', { userId })).recordset
+
         if (!questions) {
             return res.status(404).json({ error: 'No Questions Posted Yet' })
         }
 
         return res.status(200).json(questions)
+        }
+        
+
+      
 
     } catch (error) {
         return res.status(500).json(error)

@@ -5,15 +5,14 @@ import { AppComponent } from './app.component';
 import { StoreModule } from '@ngrx/store';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { EffectsModule } from '@ngrx/effects';
-import { QuestiondetailsComponent } from './homepage/questiondetails/questiondetails.component';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { UserEffects } from './States/Effects/user.effects';
 import { userReducer } from './States/Reducers/user.reducer';
+import { TokenInterceptorService } from "../app/Services/tokeninterceptor.service";
 
 @NgModule({
   declarations: [
-    AppComponent,
-    QuestiondetailsComponent
+    AppComponent
     
   ],
   imports: [
@@ -25,7 +24,7 @@ import { userReducer } from './States/Reducers/user.reducer';
     EffectsModule.forRoot([UserEffects])
   
   ],
-  providers: [],
+  providers: [{provide:HTTP_INTERCEPTORS, useClass:TokenInterceptorService, multi:true}],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

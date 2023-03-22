@@ -1,6 +1,6 @@
 import { Injectable } from "@angular/core";
 import { Actions, createEffect, ofType } from "@ngrx/effects";
-import { catchError, exhaustMap, of,map } from "rxjs";
+import { catchError, exhaustMap, of,map, tap } from "rxjs";
 import { AuthService } from "src/app/Services/Auth/authservice";
 import { UserService } from "src/app/Services/Auth/userservice";
 import * as LoginActions from '../Actions/user.action'
@@ -8,6 +8,8 @@ import * as LoginActions from '../Actions/user.action'
 @Injectable()
 export class UserEffects{
     constructor(private action:Actions ,private userService:UserService, private auth:AuthService){}
+
+    
 
     register= createEffect(()=>{
         return this.action.pipe(
@@ -21,6 +23,8 @@ export class UserEffects{
         )
     })
 
+    
+
     login= createEffect(()=>{
         return this.action.pipe(
             ofType(LoginActions.login),
@@ -29,6 +33,8 @@ export class UserEffects{
                 return this.userService.loginUser(action.user).pipe(
                  map(res=>{ 
                     this.auth.login()
+                    
+                    
                     localStorage.setItem('token', res.token)
                     return LoginActions.loginSuccess({res})}),
 

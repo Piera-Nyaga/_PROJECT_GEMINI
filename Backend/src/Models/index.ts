@@ -5,13 +5,13 @@ export class User{
 }
 
 
-export interface DecodedData{
+export interface Decoded{
   Id: string,
   UserName:string,
   Email:string,
   Role: string,
-  iat: number
-  exp: number
+  // iat: number
+  // exp: number
 }
 
 

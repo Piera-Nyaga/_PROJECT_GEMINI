@@ -1,16 +1,16 @@
 import { createFeatureSelector, createReducer, createSelector, on } from "@ngrx/store";
 import { Questions } from "src/app/Interfaces/question";
-import { addquestionFailure, addquestionSuccess, deletequestionFailure, deletequestionSuccess,loadQuestionsFailure, loadQuestionsSuccess, loadSingleQuestionId, updatequestionFailure, updatequestionSuccess } from "../Actions/questions.action";
+import { addquestionFailure, addquestionSuccess, deletequestionFailure, deletequestionSuccess, loadQuestions, loadQuestionsFailure, loadQuestionsSuccess, loadSingleQuestionId, updatequestionFailure, updatequestionSuccess } from "../Actions/questions.action";
 
 
 export interface QuestionInterface {
     questions: Questions[];
     Id: string
-    addSuccess: string
-    addError: string
-    updateError: string
-    deleteSuccess: string
-    deleteError: string
+    successonAdd: string
+    erroronAdd: string
+    erroronUpdate: string
+    successonDelete: string
+    erroronDelete: string
     error: string | null;
     // status: 'pending' | 'loading' | 'success' | 'failed';
 }
@@ -18,11 +18,11 @@ export interface QuestionInterface {
 export const intialState: QuestionInterface = {
     questions: [],
     Id: '',
-    addSuccess: '',
-    addError: '',
-    updateError: '',
-    deleteSuccess: '',
-    deleteError: '',
+    successonAdd: '',
+    erroronAdd: '',
+    erroronUpdate: '',
+    successonDelete: '',
+    erroronDelete: '',
     error: ''
     
 };
@@ -64,8 +64,8 @@ export const questionReducerr=createReducer<QuestionInterface>(
      on(addquestionSuccess, (state,action):QuestionInterface=>{
         return {
          ...state,
-         addSuccess: action.message.message,
-         addError: '',
+         successonAdd: action.message.message,
+         erroronAdd: '',
         
          
         } 
@@ -73,8 +73,8 @@ export const questionReducerr=createReducer<QuestionInterface>(
      on(addquestionFailure, (state,action):QuestionInterface=>{
         return {
          ...state,
-         addError: action.error,
-         addSuccess: ''
+         erroronAdd: action.error,
+         successonAdd: ''
         
          
         } 
@@ -87,7 +87,7 @@ export const questionReducerr=createReducer<QuestionInterface>(
 
         return {
          ...state,
-         updateError:'',
+         erroronUpdate:'',
          questions:updatedQuestion
         
         } 
@@ -96,7 +96,7 @@ export const questionReducerr=createReducer<QuestionInterface>(
 
         return {
          ...state,
-         updateError:action.error
+         erroronUpdate:action.error
 
         } 
      }),
@@ -104,8 +104,8 @@ export const questionReducerr=createReducer<QuestionInterface>(
 
         return {
          ...state,
-         deleteSuccess:action.message.message,
-         deleteError:''
+         successonDelete:action.message.message,
+         erroronDelete:''
          
           
         } 
@@ -114,8 +114,8 @@ export const questionReducerr=createReducer<QuestionInterface>(
 
         return {
          ...state,
-         deleteError:action.error,
-         deleteSuccess:''
+         erroronDelete:action.error,
+         successonDelete:''
           
         } 
      })

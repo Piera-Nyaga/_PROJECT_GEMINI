@@ -13,24 +13,23 @@ import {Questions } from '../../Interfaces/question';
 })
 export class MyquestionsComponent implements OnInit{
   questions:Questions[]=[]
-  userId!:string
 
 constructor(private questionService:QuestionService, private router:Router, private route:ActivatedRoute){}
 
 
 ngOnInit(): void {
-  this.route.params.subscribe((params:Params)=>{
-    this.userId=params['userId']
-
-    this.questionService.getmyQuiz(params['userId']).subscribe((questions)=>
-      this.questions=questions
-    ) 
-})
-   
+  this.questionService.getmyQuiz().subscribe((questions)=>{
+    this.questions=questions
+    // console.log("quesions",this.questions);
+  })
+//   this.route.params.subscribe((params:Params)=>{
+//     this.questionService.getmyQuiz().subscribe((questions)=>{
+//       this.questions=questions  
+//     })    
+// })
 }
 
 getOneQuiz(id:string){
-  // let oneQuestion
   this.questionService.getOneQuiz(id)
 }
 }

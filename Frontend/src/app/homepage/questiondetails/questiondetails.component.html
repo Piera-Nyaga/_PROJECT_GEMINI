@@ -1,10 +1,9 @@
-
 <div class="question">
 
     <div class="section-1">
-        <!-- <p>{{question?.title}}</p> -->
+        
         <div>
-            <p>Error print user.default swift 3</p>
+            <h3>{{question?.Title}}</h3>
         </div>
         <div>
             <h2 *ngIf="!shqQuiz" (click)="ShowQuestion()"> <button>+</button> </h2>
@@ -14,15 +13,11 @@
     </div>
 
     <div class="shoUp" *ngIf="shqQuiz">
-    
+
         <div class="info">
 
             <div class="description">
-                <p>I have two screens the first of login and the second shows the user information. On the login
-                    screen
-                    I keep the user_id value in user.defaults and when I go to the second screen I use that
-                    value
-                    to..
+                <p>{{question?.Description}}
                 </p>
             </div>
 
@@ -38,7 +33,12 @@
 
         </div>
 
-
+        <!-- <div class="postanswer" *ngIf="shqQuiz">
+            <form>
+                <div><textarea name="" id="" cols="100" rows="10" placeholder="Post your Answer Here"> </textarea></div> 
+                <div><button>Post Answer</button></div>
+            </form>
+        </div> -->
 
         <div class="answer" *ngIf="shqQuiz">
 
@@ -75,14 +75,17 @@
 
         </div>
 
-        <div class="postanswer" *ngIf="shqQuiz">
+        <!-- <div class="postanswer" *ngIf="shqQuiz">
             <form>
                 <textarea name="" id="" cols="100" rows="10" placeholder="Post your Answer Here"> </textarea>
+                <button>Post Answer</button>
             </form>
-        </div>
+        </div> -->
 
         <div class="comment" *ngIf="shAnsw">
-            <p>Comment</p>
+            <div class="head">
+                <p>Comment</p>
+            </div>
             <p>
                 You will have to submit a support request through AWS Contact Us page. Open the I cannot login
                 to my
@@ -90,12 +93,16 @@
             </p>
         </div>
 
-        <div class="postcomment" *ngIf="shAnsw">
-            <textarea name="" id="" cols="100" rows="10" placeholder="Add your Comment"> </textarea>
-        </div>
-       
+        <!-- <div class="postcomment" *ngIf="shAnsw">
+            <form>
+                <div><textarea name="" id="" cols="100" rows="10" placeholder="Add Comment Here"> </textarea></div> 
+                <div><button>Add Comment</button></div>
+            </form>
+        </div> -->
+
     </div>
 
     <button (click)="Update()">UPDATE</button>
+    <button (click)="Delete()">DELETE</button>
 
 </div>

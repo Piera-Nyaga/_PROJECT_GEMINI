@@ -13,43 +13,43 @@ import { QuestionService } from '../../Services/QuestionsService/questionservice
   styleUrls: ['./editquestion.component.css']
 })
 export class EditquestionComponent {
-  constructor(private fb:FormBuilder, private questionService:QuestionService, private router:Router, private route:ActivatedRoute){}
+  constructor(private fb: FormBuilder, private questionService: QuestionService, private router: Router, private route: ActivatedRoute) { }
   form!: FormGroup;
-  question?:addQuestion
-  id!:string
+  question?: addQuestion
+  id!: string
 
 
-  ngOnInit(){
-    this.form= this.fb.group({
-      Title:[null, [Validators.required]],
-      Description:[null, [Validators.required]],   
-      Code:[null],
+  ngOnInit() {
+    this.form = this.fb.group({
+      Title: [null, [Validators.required]],
+      Description: [null, [Validators.required]],
+      Code: [null],
       // createdAt: [new Date().toLocaleDateString(), [Validators.required]]
     })
 
-    this.route.params.subscribe((params:Params)=>{
-      this.questionService.getOneQuiz(params['id']).subscribe((question)=>
-        this.question=question
-      )
+    this.route.params.subscribe((params: Params) => {
+      this.id = params['id']
+      this.questionService.getOneQuiz(params['id']).subscribe((question) => {
+        this.question = question
+        this.form.patchValue({
+          Title: question.Title,
+          Description: question.Description,
+          Code: question.Code
+        })
+        console.log(question);
 
-
-    if (this.question) {
-      this.form.patchValue({
-        title:this.question.Title,
-        description:this.question.Description,
-        code:this.question.Code
       })
+      if (this.question) {
+        console.log(this.questionService.getQuiz());
+      }
 
-    console.log(this.questionService.getQuiz());
-  }
-       
-    }) 
+    })
   }
 
-  updateQuiz(){
+  updateQuiz() {
     this.questionService.updateQuiz(this.id, this.form.value).subscribe()
     this.router.navigate(['/home'])
-    
+
 
     // let question:Questions={...this.question, ...this.form.value}
     // this.questionService.updateQuiz(this.question!.Id, question)

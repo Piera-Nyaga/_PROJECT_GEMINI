@@ -11,7 +11,7 @@ const _db = new DatabaseHelper()
 dotenv.config({ path: path.resolve(__dirname, '../../.env') })
 
 interface ExtendedRequest extends Request {
-    body: {Description: string, userId: string, answerId: string }
+    body: {Description: string, userId: string, answerId: string}
 }
 
 
@@ -19,8 +19,9 @@ interface ExtendedRequest extends Request {
 export async function addComment(req: ExtendedRequest, res: Response) {
     try {
         const id = uid()
+        console.log(req.body);
         const createdAt: string = new Date().toISOString()
-        const {Description, userId, answerId} = req.body
+        const {Description, userId, answerId } = req.body
         const{error} =AddCommentSchema.validate(req.body)
     
         if (error) {

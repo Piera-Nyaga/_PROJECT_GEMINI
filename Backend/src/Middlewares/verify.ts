@@ -11,14 +11,18 @@ info?:DecodedData
 }
 
 export function VerifyToken (req:ExtendedRequest, res:Response,next:NextFunction){
-const token = req.headers['token'] as  string
-try {
+const token = req.headers['authorization'] as  string
+const tok = token.split(" ")
+const realToken = tok[1]
+try {                                         
     
     if(!token){
         return res.status(401).json({error:'Forbidden'})
     }
-    const Payloadata= jwt.verify(token, process.env.SECRETKEY as string) as DecodedData
+    const Payloadata= jwt.verify(realToken, process.env.SECRETKEY as string) as DecodedData
     req.info= Payloadata
+    console.log(Payloadata);
+    
     } 
 catch (error:any) {
    res.status(403).json(error.message) 

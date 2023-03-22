@@ -1,24 +1,25 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+import { AuthGuardService} from "../app/Services/Guards/authguard.service";
 
 const routes: Routes = [
   { path: '', loadComponent: () => import('./landing-page/landing-page.component').then(c => c.LandingPageComponent) },
   { path: 'register', loadComponent: () => import('./Auth/register/register.component').then(c => c.RegisterComponent) },
   { path: 'login', loadComponent: () => import('./Auth/login/login.component').then(c => c.LoginComponent) },
   {
-    path: 'home', loadComponent: () => import('./homepage/homepage.component').then(c => c.HomepageComponent),
+    path: 'home', canActivate:[AuthGuardService], loadComponent: () => import('./homepage/homepage.component').then(c => c.HomepageComponent),
     children: [
       { path: '', loadComponent: () => import('./homepage/allquestions/allquestions.component').then(c => c.AllquestionsComponent) },
-      { path: 'myquestions/:userId', loadComponent: () => import('./homepage/myquestions/myquestions.component').then(c => c.MyquestionsComponent) },
+      { path: 'myquestions', loadComponent: () => import('./homepage/myquestions/myquestions.component').then(c => c.MyquestionsComponent) },
       { path: 'add', loadComponent: () => import('./homepage/addquestion/addquestion.component').then(c => c.AddquestionComponent) },
       { path: 'one/:id', loadComponent: () => import('./homepage/onequestion/onequestion.component').then(c => c.OnequestionComponent) },
-      { path: 'onee/:id', loadComponent: () => import('./homepage/questiondetails/questiondetails.component').then(c => c.QuestiondetailsComponent) },
-      { path: 'edit/:id', loadComponent: () => import('./homepage/editquestion/editquestion.component').then(c => c.EditquestionComponent) },
+      { path: 'myquestions/onee/:id', loadComponent: () => import('./homepage/questiondetails/questiondetails.component').then(c => c.QuestiondetailsComponent) },
+      { path: 'myquestions/edit/:id', loadComponent: () => import('./homepage/editquestion/editquestion.component').then(c => c.EditquestionComponent) },
     ]
   },
 
   {
-    path: 'profile', loadComponent: () => import('./profile/profile.component').then(c => c.ProfileComponent),
+    path: 'profile', canActivate:[AuthGuardService], loadComponent: () => import('./profile/profile.component').then(c => c.ProfileComponent),
     children: [
       { path: '', loadComponent: () => import('./profile/allmyquestions/allmyquestions.component').then(c => c.AllmyquestionsComponent) },
       { path: 'mostanswered', loadComponent: () => import('./profile/mostanswered/mostanswered.component').then(c => c.MostansweredComponent) },

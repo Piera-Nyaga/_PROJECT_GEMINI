@@ -26,9 +26,9 @@ console.log("i am showing up!")
 
 export const checkConnection = async () => {
     try {
-        const x = await mssql.connect(sqlConfig)
-        if (x.connected) {
-            console.log('Database is connected......'); 
+        const z = await mssql.connect(sqlConfig)
+        if (z.connected) {
+            console.log('Database is connected, and running......'); 
         }
     } catch (error) {
         console.log(error);

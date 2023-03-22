@@ -1,7 +1,7 @@
 import { RequestHandler, Request, Response } from 'express'
 import { v4 as uid } from 'uuid'
 import { LoginSchema, RegistrationSchema } from '../Helpers/validateUser'
-import { DecodedData, User } from '../Models/index'
+import { Decoded, User } from '../Models/index'
 import Bcrypt from 'bcrypt'
 import dotenv from 'dotenv'
 import path from 'path'
@@ -15,7 +15,7 @@ dotenv.config({ path: path.resolve(__dirname, '../../.env') })
 
 interface ExtendedRequest extends Request {
     body: { UserName: string, Email: string, Password: string, ConfirmPassword: string }
-    info?: DecodedData
+    info?: Decoded
 }
 
 
@@ -70,14 +70,20 @@ export async function loginUser(req: ExtendedRequest, res: Response) {
         if (!validpassword) {
             return res.status(404).json({ error: 'Wrong password. Please Try Again' })
         }
-        return res.status(200).json({ message: 'User Loggedin!!!'})
+
+        const payload= user.map(item=>{
+            const {Password,...rest}=item
+            return rest
+        })
+        const token = jwt.sign(payload[0], process.env.SECRETKEY as string , {expiresIn:'3600s'})
+        return res.status(200).json({ message: 'User Loggedin!!!', token, userId: `${user[0].Id}`})
 
     } catch (error: any) {
         res.status(500).json(error.message)
     }
 }
 
-//UPDATE USER
+//UPDATE USER payload[0]
 export async function updateUser(req: ExtendedRequest, res: Response) {
     try {
         const id = req.params.id

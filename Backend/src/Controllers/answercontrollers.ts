@@ -19,6 +19,7 @@ interface ExtendedRequest extends Request {
 export async function postAnswer(req: ExtendedRequest, res: Response) {
     try {
         const id = uid()
+        console.log(req.body);
         const createdAt: string = new Date().toISOString()
         const {Description, userId, questionId } = req.body
         const {error}= AddAnswerSchema.validate(req.body)
@@ -26,7 +27,6 @@ export async function postAnswer(req: ExtendedRequest, res: Response) {
         if(error){
             return res.status(422).json(error)
         }
-    
         await _db.exec('postAnswer ', { id: id, Description, userId, questionId, createdAt })
         return res.status(201).json({ message: 'Answer added' })
 

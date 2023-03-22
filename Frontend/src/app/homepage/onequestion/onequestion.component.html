@@ -34,9 +34,9 @@
         </div>
 
         <div class="postanswer" *ngIf="shqQuiz">
-            <form>
-                <div><textarea name="" id="" cols="100" rows="10" placeholder="Post your Answer Here"> </textarea></div> 
-                <div><button>Post Answer</button></div>
+            <form [formGroup]= "form" *ngIf="question?.userId!==userId" >
+                <div><textarea name="" id="" cols="100" rows="10" placeholder="Post your Answer Here" formControlName="Description"> </textarea></div> 
+                <div><button type="submit" (click)="addAnswer()">Post Answer</button></div>
             </form>
         </div>
 
@@ -93,16 +93,13 @@
             </p>
         </div>
 
-        <div class="postcomment" *ngIf="shAnsw">
-            <form>
-                <div><textarea name="" id="" cols="100" rows="10" placeholder="Add Comment Here"> </textarea></div> 
-                <div><button>Add Comment</button></div>
+        <div class="postcomment"  *ngIf="shAnsw">
+            <form [formGroup]= "form1" *ngIf="question?.userId!==userId">
+                <div><textarea name="" id="" cols="100" rows="10" placeholder="Add Comment Here" formControlName="Description"> </textarea></div> 
+                <!-- <div><button (click)="addComment()">Add Comment</button></div> -->
             </form>
         </div>
 
     </div>
-
-    <button (click)="Update()">UPDATE</button>
-    <!-- <button (click)="Delete()">DELETE</button> -->
-
+    
 </div>

@@ -17,7 +17,7 @@ const initialState:UserInterface={
 
 }
 
-const userSlice=createFeatureSelector<UserInterface>('user')
+export const userSlice=createFeatureSelector<UserInterface>('user')
 
 // export const nameSelector= createSelector(userSlice, state=>state.userData?.UserName)
 

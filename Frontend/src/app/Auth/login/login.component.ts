@@ -31,7 +31,6 @@ export class LoginComponent implements OnInit {
     //   return
     // }
     this.store.dispatch(login({user:this.form.value}))
-    // this.userService.loginUser(this.form.value).subscribe()
     this.router.navigate(['/home'])
   }
 }
