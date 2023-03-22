@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Store } from '@ngrx/store';
 import { loadQuestions } from '../../States/Actions/questions.action';
-import { Question } from '../../Interfaces/question';
+import { Questions } from '../../Interfaces/question';
 import { QuestionService } from '../../Services/QuestionsService/questionservice';
 import { ActivatedRoute, Router, RouterModule } from '@angular/router';
 
@@ -15,18 +15,21 @@ import { ActivatedRoute, Router, RouterModule } from '@angular/router';
 })
 export class AllquestionsComponent {
 
-  question:Question[]=[]
+  questions:Questions[]=[]
 
 constructor(private questionService:QuestionService, private router:Router, private route:ActivatedRoute){}
 
 
 ngOnInit(): void {
-  this.question = this.questionService.getQuiz()
-  // console.log(this.questionService.getQuiz());
+  this.questionService.getQuiz().subscribe((questions)=>{
+  this.questions=questions
+  // console.log(this.questions);
+})
+  
+  
 }
 
 getOneQuiz(id:string){
-  let one:Question
   this.questionService.getOneQuiz(id)
 }
 

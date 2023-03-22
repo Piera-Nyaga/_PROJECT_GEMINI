@@ -15,7 +15,6 @@ dotenv.config({ path: path.resolve(__dirname, '../../.env') })
 
 interface ExtendedRequest extends Request {
     body: { UserName: string, Email: string, Password: string, ConfirmPassword: string }
-    // params: {Email:string, id:string}
     info?: DecodedData
 }
 
@@ -24,18 +23,19 @@ interface ExtendedRequest extends Request {
 export async function registerUser(req: ExtendedRequest, res: Response) {
     try {
         const id = uid()
-        const { UserName, Email, Password } = req.body
+        const { UserName, Email, Password} = req.body
         const { error } = RegistrationSchema.validate(req.body)
 
         if (error) {
-            return res.status(422).json(error.message)
+            return res.status(422).json(error)
         }
-        // const hashedPassword= await Bcrypt.hash(Password,100)
-        await _db.exec('RegisterUser', { id: id, username: UserName, email: Email, password: Password })
+        const hashedPassword= await Bcrypt.hash(Password,10)
+        
+        await _db.exec('RegisterUser', { id: id, username: UserName, email: Email, password: hashedPassword })
         return res.status(201).json({ message: 'User registered' })
     }
     catch (error) {
-        return res.status(500).json(error)
+        return res.status(500).json({message:'Cannot Register User'})
     }
 }
 
@@ -68,15 +68,9 @@ export async function loginUser(req: ExtendedRequest, res: Response) {
 
         const validpassword = await Bcrypt.compare(Password, user[0].Password)
         if (!validpassword) {
-            return res.status(404).json({ error: 'Wrong password' })
+            return res.status(404).json({ error: 'Wrong password. Please Try Again' })
         }
-
-        const payload = user.map(item => {
-            const { Password, ...rest } = item
-            return rest
-        })
-        const token = jwt.sign(payload[0], process.env.SECRETKEY as string, { expiresIn: '3600s' })
-        return res.status(200).json({ message: 'User Loggedin!!!', token })
+        return res.status(200).json({ message: 'User Loggedin!!!'})
 
     } catch (error: any) {
         res.status(500).json(error.message)
@@ -104,7 +98,6 @@ export async function updateUser(req: ExtendedRequest, res: Response) {
             }
         }
         return res.status(404).json({ error: 'User Not Found' })
-
     }
     catch (error) {
         res.status(500).json(error)

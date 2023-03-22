@@ -1,16 +1,30 @@
 <br>
 <div id="sign">
 
-    <!-- <div id="theform">  -->
-        <form action=""> 
-            <h3> LOGIN HERE:</h3>
-            <input type="email" name="" id="" placeholder="Email Address">
-            <input type="password" name="" id="" placeholder="Password"> 
-            <!-- <button (click)="userService.login()">Login</button> -->
-            <!-- <button class="signin" (click)="userService.login()">Sign In</button> -->
-        </form>
-        <button class="signin" (click)="userService.login()">Sign In</button>
-    <!-- </div> -->
+    <form [formGroup]="form" (ngSubmit)="submitData()">
+        <h3> LOGIN HERE:</h3>
+        <div class="group">
+
+            <input type="email" name="" id="" placeholder="Email Address" formControlName="Email">
+            <span class="error" *ngIf="!form.get('Email')?.valid && form.get('Email')?.touched">
+                <span class="error" *ngIf="form.get('Email')!.errors!['required']"> <br>
+                    Please Input an
+                    Email</span>
+                <span class="error" *ngIf="form.get('Email')!.errors!['Email']"> <br>
+                    Enter a Valid
+                    Email</span>
+            </span>
+        </div>
+
+        <div class="group">
+            <input type="password" name="" id="" placeholder="Password" formControlName="Password">
+            <span class="error" *ngIf="!form.get('Password')?.valid && form.get('Password')?.touched"> <br> 
+                Enter a Password</span>
+        </div>
+        <button class="signin" [disabled]="!form.valid"> Sign In</button>
+    </form>
+
+
 
     <div id="buttns">
         <a href="">Forgot your Password?</a>

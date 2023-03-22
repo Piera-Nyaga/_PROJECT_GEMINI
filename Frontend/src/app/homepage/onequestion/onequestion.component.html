@@ -1,9 +1,9 @@
 <div class="question">
 
     <div class="section-1">
-        <!-- <p>{{question?.title}}</p> -->
+        
         <div>
-            <p>Error print user.default swift 3</p>
+            <h3>{{question?.Title}}</h3>
         </div>
         <div>
             <h2 *ngIf="!shqQuiz" (click)="ShowQuestion()"> <button>+</button> </h2>
@@ -17,11 +17,7 @@
         <div class="info">
 
             <div class="description">
-                <p>I have two screens the first of login and the second shows the user information. On the login
-                    screen
-                    I keep the user_id value in user.defaults and when I go to the second screen I use that
-                    value
-                    to..
+                <p>{{question?.Description}}
                 </p>
             </div>
 

@@ -19,7 +19,7 @@ const sendWelcomeEmail = async()=>{
     query("SELECT * FROM Users WHERE isSent =0")).recordset
     
 for(let user of users){
-    ejs.renderFile('templates/index.ejs',{name:user.UserName}, async(error, html)=>{
+    ejs.renderFile('templates/welcome.ejs',{name:user.UserName}, async(error, html)=>{
     const message = {
     from: process.env.EMAIL,
     to: user.Email,
@@ -29,7 +29,7 @@ for(let user of users){
 
  try {
 await sendMail(message) 
-await pool.request().query(`UPDATE Users SET isSent =1 WHERE userId ='${user.Id}'`)
+await pool.request().query(`UPDATE Users SET isSent =1 WHERE Id ='${user.Id}'`)
  } catch (error) {
     console.log(error);
     }  

@@ -11,7 +11,6 @@ dotenv.config({ path: path.resolve(__dirname, '../../.env') })
 
 interface ExtendedRequest extends Request {
     body: {vote: string, userId: string, answerId: string }
-    params: { id: string }
 }
 
 
@@ -37,7 +36,9 @@ export const getallVotes: RequestHandler = async (req, res) => {
         const pool = await mssql.connect(sqlConfig)
         const votes= await (await pool.request().execute('getallVotes')).recordset
         return res.status(200).json(votes)
-    } catch (error) {
+    } 
+    
+    catch (error) {
         return res.status(404).json(error)
     }
 }

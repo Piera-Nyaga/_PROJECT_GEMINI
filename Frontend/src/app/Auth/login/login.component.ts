@@ -1,16 +1,37 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { UserService } from '../../Services/Auth/userservice';
-import { RouterModule } from '@angular/router';
+import { Router, RouterModule } from '@angular/router';
+import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import { UserService } from 'src/app/Services/Auth/userservice';
+import { AppState } from 'src/app/app.state';
+import { Store } from '@ngrx/store';
+import { login } from 'src/app/States/Actions/user.action';
 
 @Component({
   selector: 'app-login',
   standalone: true,
-  imports: [CommonModule, RouterModule],
+  imports: [CommonModule, RouterModule, ReactiveFormsModule],
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.css']
 })
-export class LoginComponent {
-  constructor(public userService:UserService){}
+export class LoginComponent implements OnInit {
+  
+  form!:FormGroup
+  constructor(private fb:FormBuilder, private userService :UserService, private router:Router, private store:Store<AppState>){}
 
+  ngOnInit(): void {
+    this.form = this.fb.group({
+      Email:[null, [Validators.required, Validators.email]],
+      Password:[null, Validators.required]
+    })
+  }
+
+  submitData(): void {
+    // if (this.form.invalid) {
+    //   return
+    // }
+    this.store.dispatch(login({user:this.form.value}))
+    // this.userService.loginUser(this.form.value).subscribe()
+    this.router.navigate(['/home'])
+  }
 }

@@ -4,33 +4,33 @@
 
         <h3>REGISTER ACCOUNT HERE:</h3>
         <div class="group">
-            <input type="text" name="" id="" placeholder="UserName" formControlName="username">
-            <span class="error" *ngIf="!form.get('username')?.valid && form.get('username')?.touched">
+            <input type="text" name="" id="" placeholder="UserName" formControlName="UserName">
+            <span class="error" *ngIf="!form.get('UserName')?.valid && form.get('UserName')?.touched">
                 <br> UserName is needed</span>
         </div>
 
         <div class="group">
-            <input type="email" name="" id="" placeholder="Email Address" formControlName="email">
-            <span class="error" *ngIf="!form.get('email')?.valid && form.get('email')?.touched">
-                <span class="error" *ngIf="form.get('email')!.errors!['required']"> <br>
+            <input type="email" name="" id="" placeholder="Email Address" formControlName="Email">
+            <span class="error" *ngIf="!form.get('Email')?.valid && form.get('Email')?.touched">
+                <span class="error" *ngIf="form.get('Email')!.errors!['required']"> <br>
                      Please Input an
                     Email</span>
-                <span class="error" *ngIf="form.get('email')!.errors!['email']"> <br>
+                <span class="error" *ngIf="form.get('Email')!.errors!['Email']"> <br>
                      Enter a Valid
                     Email</span>
             </span>
         </div>
 
         <div class="group">
-            <input type="password" name="" id="" placeholder="Password" formControlName="password">
-            <span class="error" *ngIf="!form.get('password')?.valid && form.get('password')?.touched"> <br> Please
+            <input type="password" name="" id="" placeholder="Password" formControlName="Password">
+            <span class="error" *ngIf="!form.get('Password')?.valid && form.get('Password')?.touched"> <br> Please
                 Enter a Valid Password</span>
         </div>
         <div class="group">
-            <input type="password" name="" id="" placeholder="Confirm Password" formControlName="confirmPassword">
+            <input type="password" name="" id="" placeholder="Confirm Password" formControlName="ConfirmPassword">
         </div>
 
-        <button class="regbutton">Register</button>
+        <button class="regbutton" [disabled]="!form.valid">Register</button>
     </form>
 
 

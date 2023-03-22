@@ -1,6 +1,6 @@
 CREATE TABLE Users
 ( 
-    userId VARCHAR(100) PRIMARY KEY,
+    Id VARCHAR(100) PRIMARY KEY,
     Name VARCHAR(200) ,
     Email VARCHAR(300) UNIQUE,
     Password VARCHAR(150),

@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { ActivatedRoute, Params, Router } from '@angular/router';
-import { Question } from '../../Interfaces/question';
+import { Questions } from '../../Interfaces/question';
 import { QuestionService } from '../../Services/QuestionsService/questionservice';
 
 @Component({
@@ -9,7 +9,7 @@ import { QuestionService } from '../../Services/QuestionsService/questionservice
   styleUrls: ['./questiondetails.component.css']
 })
 export class QuestiondetailsComponent {
-  question?:Question;
+  question?:Questions;
  id!:string
 
  constructor(private route:ActivatedRoute, private questionService:QuestionService,private router:Router){
@@ -32,8 +32,10 @@ export class QuestiondetailsComponent {
   ngOnInit(): void {
     this.route.params.subscribe((params:Params)=>{
       this.id=params['id']
-      this.question= this.questionService.getOneQuiz(params['id'])
-    })
+      this.questionService.getOneQuiz(params['id']).subscribe((question)=>
+        this.question=question
+      ) 
+  })
      
   }
 

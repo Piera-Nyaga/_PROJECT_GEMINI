@@ -1,6 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { Question } from '../../Interfaces/question';
+import { Questions } from '../../Interfaces/question';
 import { ActivatedRoute, Params, Router, RouterModule } from '@angular/router';
 import { QuestionService } from '../../Services/QuestionsService/questionservice';
 
@@ -13,7 +13,7 @@ import { QuestionService } from '../../Services/QuestionsService/questionservice
 })
 
 export class OnequestionComponent implements OnInit{
- question?:Question;
+ question?:Questions;
  id!:string
 
  constructor(private route:ActivatedRoute, private questionService:QuestionService,private router:Router){
@@ -36,9 +36,10 @@ export class OnequestionComponent implements OnInit{
   ngOnInit(): void {
     this.route.params.subscribe((params:Params)=>{
       this.id=params['id']
-      this.question= this.questionService.getOneQuiz(params['id'])
-    })
-     
+      this.questionService.getOneQuiz(params['id']).subscribe((question)=>
+        this.question=question
+      ) 
+  })
   }
 
   Update(){

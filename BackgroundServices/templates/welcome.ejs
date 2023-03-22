@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<style>
+    * {
+        margin: 0px;
+    }
+
+    .content {
+        width: 100%;
+        margin: auto;
+        display: flex;
+    }
+
+    .info {
+        display: flex;
+        flex-direction: column
+    }
+
+    .heading {
+        gap: 20px;
+    }
+</style>
+
+<body>
+    <div class="content">
+
+        <div class="image">
+            <img src="https://cdn.pixabay.com/photo/2015/04/15/21/31/welcome-sign-724689__340.jpg" alt=" No Photo!!">
+        </div>
+
+        <div class="info">
+
+            <div class="heading">
+                <h4>Hello <%=name%>
+                </h4>
+                <h4>Welcome to The Gateway</h4>
+            </div>
+
+            <div class="message">
+                <p>Your Registration was Successful. Welcome to the community.</p>
+            </div>
+
+        </div>
+
+    </div>
+
+</body>

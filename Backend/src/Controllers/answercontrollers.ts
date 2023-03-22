@@ -5,13 +5,13 @@ import path from 'path'
 import { DatabaseHelper } from '../Databasehelpers/index'
 import { sqlConfig } from '../Config/config'
 import mssql from 'mssql'
+import { AddAnswerSchema } from '../Helpers/validateAnswer'
 
 const _db = new DatabaseHelper()
 dotenv.config({ path: path.resolve(__dirname, '../../.env') })
 
 interface ExtendedRequest extends Request {
     body: {Description: string, userId: string, questionId: string }
-    params: { id: string }
 }
 
 
@@ -21,6 +21,11 @@ export async function postAnswer(req: ExtendedRequest, res: Response) {
         const id = uid()
         const createdAt: string = new Date().toISOString()
         const {Description, userId, questionId } = req.body
+        const {error}= AddAnswerSchema.validate(req.body)
+
+        if(error){
+            return res.status(422).json(error)
+        }
     
         await _db.exec('postAnswer ', { id: id, Description, userId, questionId, createdAt })
         return res.status(201).json({ message: 'Answer added' })
@@ -64,13 +69,17 @@ export const approveAnswer = async (req: ExtendedRequest, res: Response) => {
     try {
         const id = req.params.id
         const {questionId}= req.body
-
+        
         const answer= await (await _db.exec('getAnswerbyId', { id })).recordset[0]
         
             if (answer) {
                 await _db.exec('markPreferred', { id: req.params.id })
-                const userDetails= await (await _db.exec('getPreferredAnswerDetails', { questionId:questionId })).recordset[0]
+
+                const userDetails= await (await _db.exec('getPreferredAnswerDetails')).recordset[0]
+        // console.log(userDetails)
                 return res.status(201).json({message:'Answer marked as preffered'})
+                
+
             }
     }
     catch (error) {

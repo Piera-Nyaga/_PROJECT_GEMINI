@@ -1,21 +1,21 @@
-<div class="content" *ngIf="question.length>0; else nothing">
-    <div class="one" *ngFor="let one of question">
+<div class="content" *ngIf="questions.length>0; else nothing">
+    <div class="one" *ngFor="let one of questions">
 
-        <div class="title" routerLink="one/{{one.id}}">
-            <h3 >{{one.title}}</h3>
+        <div class="title" routerLink="one/{{one.Id}}">
+            <h3 >{{one.Title}}</h3>
         </div>
 
         <div class="description">
-            <p>{{one.description}}</p>
+            <p>{{one.Description}}</p>
         </div>
 
         <div class="metadata">
 
-            <div class="answer"> 10 answers</div>
+            <div class="answer"> </div>
             
             <div class="time">
-                <div class="user"> <h4> Jane Doe </h4></div>
-                <div class="answer"> {{one.createdAt}}</div>
+                <div class="user"> <h4>  </h4></div>
+                <!-- <div class="answer"> {{one.createdAt}}</div> -->
             </div>
         </div>
     </div>

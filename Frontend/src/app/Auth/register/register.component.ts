@@ -1,9 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { FormBuilder, FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { User } from '../../Interfaces/user';
 import { Router } from '@angular/router';
-import { UserService } from '../../Services/Auth/userservice';
+import { UserService } from 'src/app/Services/Auth/userservice';
+import { register } from 'src/app/States/Actions/user.action';
+import { AppState } from '../../../app/app.state';
+import { Store } from '@ngrx/store';
 
 @Component({
   selector: 'app-register',
@@ -17,22 +20,29 @@ export class RegisterComponent implements OnInit{
   error = '';
   form!: FormGroup
 
-  constructor(private router: Router, private fb:FormBuilder, private userService:UserService) { }
+  constructor(private fb:FormBuilder, private userService:UserService, private router:Router, private store:Store<AppState>) { }
 
   ngOnInit(): void {
     this.form = this.fb.group({
-      username: [null, [Validators.required]],
-      email: [null, [Validators.required, Validators.email]],
-      password: [null, [Validators.required]],
-      confirmPassword: [null, [Validators.required]]
+      UserName: [null, [Validators.required]],
+      Email: [null, [Validators.required, Validators.email]],
+      Password: [null, [Validators.required]],
+      ConfirmPassword: [null, [Validators.required]]
     })
   }
 
   submitData(): void {
-    this.userService.register(this.form.value)
-    this.router.navigate(['/login'])
+    // if (this.form.invalid) {
+    //   return
+    // }
+    this.store.dispatch(register({user:this.form.value}))
+    // this.userService.registerUser(this.form.value).subscribe()
+      this.router.navigate(['/login'])
+  }
+
   }
 
 
+  
 
-}
+

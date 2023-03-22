@@ -1,45 +1,58 @@
-export interface Question{
-    id:string
-    title:string
-    description:string
-    code?:string
-    createdAt:string
+export interface addQuestion{
+    // Id:string
+    Title:string
+    Description:string
+    Code?:string
+    // createdAt:string
 }
 
-interface Questionn{
-    id:string
-    title:string
-    description:string
-    code?:string
+export interface Questions{
+    Id:string
+    Title:string
+    Description:string
+    Code?:string
     createdAt:string
-    user_Id:string
+    userId:string
     answer:Answer[]
     
 }
-interface Answer{
-    id:string
-    description:string
-    code?:string
+export interface Message{
+    message:string
+}
+export interface addAnswer{
+    // Id:string
+    Description:string
+    // createdAt:string
+}
+export interface Answer{
+    Id:string
+    Description:string
+    Code?:string
     createdAt:string
     votes:Vote[]
     comment:Comment[]
-    user_id:string
-    question_id:string
+    userId:string
+    questionId:string
 }
 
-interface Comment{
-    id:string
-    description:string
+export interface addComment{
+    // Id:string
+    Description:string
+    // createdAt:string
+}
+export interface Comment{
+    Id:string
+    Description:string
     createdAt:string
-    user_id:string
-    answer_id:string
+    userId:string
+    answerId:string
 
 }
 
-interface Vote{
-    id:string
+export interface Vote{
+    Id:string
     vote: boolean
-    answer_id:string
-    user_ID:string
+    answerId:string
+    userId:string
 }
 

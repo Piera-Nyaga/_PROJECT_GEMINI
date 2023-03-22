@@ -13,7 +13,6 @@ dotenv.config({ path: path.resolve(__dirname, '../../.env') })
 
 interface ExtendedRequest extends Request {
     body: { Title: string, Description: string, Code: string, userId: string }
-    params: { id: string }
 }
 
 
@@ -22,7 +21,7 @@ export async function postQuestion(req: ExtendedRequest, res: Response) {
     try {
         const id = uid()
         const createdAt: string = new Date().toISOString()
-        const { Title, Description, Code, userId, } = req.body
+        const { Title, Description, Code, userId } = req.body
         const { error } = PostingSchema.validate(req.body)
 
         if (error) {
@@ -65,14 +64,30 @@ export const getoneQuestion = async (req: ExtendedRequest, res: Response) => {
 
 }
 
+// GET USER QUESTIONS
+export const getUserQuestions = async (req: ExtendedRequest, res: Response) => {
+    try {
+        const userId = req.params.userId
+        const questions: Question[] = await (await _db.exec('getUserQuestions', { userId })).recordset
+        if (!questions) {
+            return res.status(404).json({ error: 'No Questions Posted Yet' })
+        }
+
+        return res.status(200).json(questions)
+
+    } catch (error) {
+        return res.status(500).json(error)
+    }
+
+}
+
 // UPDATE QUESTION
 export const updateQuestion = async (req: ExtendedRequest, res: Response) => {
     try {
         const id = req.params.id
         const createdAt: string = new Date().toISOString()
         const { Title, Description, Code } = req.body
-        //   console.log(req.body);
-
+    
         const question: Question = await (await _db.exec('getquestionbyId', { id })).recordset[0]
         question.Title = req.body.Title;
         question.Description = req.body.Description;
@@ -96,6 +111,7 @@ export const updateQuestion = async (req: ExtendedRequest, res: Response) => {
 
 export const deleteQuestion = async (req: ExtendedRequest, res: Response) => {
     try {
+
         const id = req.params.id
         const question: Question = await (await _db.exec('getquestionbyId', { id })).recordset[0]
 
