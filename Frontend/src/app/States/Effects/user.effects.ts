@@ -3,11 +3,13 @@ import { Actions, createEffect, ofType } from "@ngrx/effects";
 import { catchError, exhaustMap, of,map, tap } from "rxjs";
 import { AuthService } from "src/app/Services/Auth/authservice";
 import { UserService } from "src/app/Services/Auth/userservice";
+import { AdminService } from "../../admin/adminService";
+
 import * as LoginActions from '../Actions/user.action'
 
 @Injectable()
 export class UserEffects{
-    constructor(private action:Actions ,private userService:UserService, private auth:AuthService){}
+    constructor(private action:Actions ,private userService:UserService, private adminService:AdminService, private auth:AuthService){}
 
     
 
@@ -44,5 +46,33 @@ export class UserEffects{
         )
     })
 
+    getUsers=createEffect(()=>{
+        return this.action.pipe(
+            ofType(LoginActions.getUsers),
+            exhaustMap(()=>{
+               return this.adminService.getUsers().pipe(
+                    map(users=>{
+                        return LoginActions.getUsersSuccess({users})
+                    }),
+                    catchError(error=>of(LoginActions.getUsersFailure({errorMessage:error.message})))
+                )
+            })
+        )
+    })
+    deleteUser= createEffect(()=>{
+        return this.action.pipe(
+            ofType(LoginActions.deleteUser),
+            
+            exhaustMap(action=>{
+               return this.adminService.deleteUser(action.id).pipe(
+                    map(successResponse=>{
+                        
+                    return  LoginActions.deleteUserSuccess({message:successResponse})
+                    }),
+                    catchError(error=>of(LoginActions.deleteUserFailure({errorMessage:error.message})))
+                ) 
+            }) 
+        )
+    })
     
 }

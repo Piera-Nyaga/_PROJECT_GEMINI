@@ -9,10 +9,13 @@
     </div>
 
     <!-- <div class="links"> -->
-    <a routerLink="/register">Register</a>
-    <a routerLink="/login">Login</a>
-    <a routerLink="/profile">Profile</a>
-    <a routerLink="">Logout</a>
+
+    <a *ngIf="!auth.isLoggedIn" routerLink="/register">Register</a>
+    <a *ngIf="!auth.isLoggedIn" routerLink="/login">Login</a>
+    <a *ngIf="auth.isLoggedIn" routerLink="/profile">Profile</a>
+    <a *ngIf="auth.isLoggedIn" routerLink="/home">Home</a>
+    <a *ngIf="auth.isLoggedIn" (click)="auth.logout()"routerLink="">Logout</a>
+    
     <!-- </div> -->
 </nav>
 

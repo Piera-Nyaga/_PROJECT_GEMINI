@@ -1,42 +1,48 @@
 <div class="question">
 
     <div class="section-1">
-        
-        <div>
-            <h3>{{question?.Title}}</h3>
+
+        <div class="title">
+
+            <div>
+                <h3>{{question?.Title}}</h3>
+            </div>
+            <div>
+                <h2 *ngIf="!shqQuiz" (click)="ShowQuestion()"> <button class="the-btn">+</button> </h2>
+                <h2 *ngIf="shqQuiz" (click)="ShowQuestion()"> <button class="the-btn">-</button> </h2>
+            </div>
         </div>
-        <div>
-            <h2 *ngIf="!shqQuiz" (click)="ShowQuestion()"> <button>+</button> </h2>
-            <h2 *ngIf="shqQuiz" (click)="ShowQuestion()"> <button>-</button> </h2>
+
+        <div class="description">
+            <p>{{question?.Description}}
+            </p>
+        </div>
+
+        <div class="metadata">
+
+            <div class="answer">10 Answers</div>
+            <div class="user">
+                <h4> Jane Doe </h4>
+            </div>
+            <div class="time">{{question?.createdAt | date}} </div>
+
         </div>
 
     </div>
 
     <div class="shoUp" *ngIf="shqQuiz">
 
-        <div class="info">
-
-            <div class="description">
-                <p>{{question?.Description}}
-                </p>
-            </div>
-
-            <!-- <div class="metadata">
-
-                        <div class="answer"> 10 answers</div>
-    
-                        <div class="time">
-                            <div class="user"> Jane Doe</div>
-                            <div class="answer"> Updated on 13/03/2023 </div>
-                        </div>
-                    </div> -->
-
+        <div class="code">
+            <p>{{question?.Code}}
+            </p>
         </div>
 
         <div class="postanswer" *ngIf="shqQuiz">
-            <form [formGroup]= "form" *ngIf="question?.userId!==userId" >
-                <div><textarea name="" id="" cols="100" rows="10" placeholder="Post your Answer Here" formControlName="Description"> </textarea></div> 
-                <div><button type="submit" (click)="addAnswer()">Post Answer</button></div>
+
+            <form [formGroup]="form" *ngIf="question?.userId!==userId">
+                <div><textarea name="" id="" cols="100" rows="10" placeholder="Post your Answer Here"
+                        formControlName="Description"> </textarea></div>
+                <div><button class="the-btn" type="submit" (click)="addAnswer()">Post Answer</button></div>
             </form>
         </div>
 
@@ -51,55 +57,67 @@
                 </div>
             </div>
 
-            <div class="theanswer">
+            <div class="theanswer" *ngFor="let answer of answers">
 
                 <div class="votes">
-                    <div class="upvote"> <i class="fa-solid fa-arrow-up"></i> </div>
+                    <div class="upvote"> <a href=""> <i class="fa-solid fa-arrow-up"></i> </a> </div>
                     <div class="number"> 10 </div>
-                    <div class="downvote"> <i class="fa-solid fa-arrow-down"></i> </div>
+                    <div class="downvote"> <a href=""> <i class="fa-solid fa-arrow-down"></i> </a></div>
                 </div>
 
                 <div>
-                    <p>You will have to submit a support request through AWS Contact Us page. Open the I cannot
-                        login to
-                        my
-                        AWS Account and then Lost account information. Hope that helps</p>
+                    <p> {{answer.Description}}</p>
                 </div>
 
                 <div>
-                    <h2 class="answer-minus" *ngIf="!shAnsw" (click)="showAnsw()"> <button>+</button> </h2>
-                    <h2 class="answer-minus" *ngIf="shAnsw" (click)="showAnsw()"> <button>-</button> </h2>
+                    <h2 class="answer-minus" *ngIf="!shAnsw" (click)="showAnswer()"> <button class="the-btn">Comments</button>
+                    </h2>
+                    <h2 class="answer-minus" *ngIf="shAnsw" (click)="showAnswer()"> <button class="the-btn">Close</button>
+                    </h2>
+                </div>
+
+                <div class="comment" *ngIf="shAnsw">
+                    <div class="head">
+                        <p>Comment</p>
+                    </div>
+
+                    <div *ngFor="let comment of comments">
+                        <p> {{comment.Description}}</p>
+                    </div>
+
+                    <div>
+                        <!-- <h2 class="answer-minus" *ngIf="shComm" (click)="showComment()"> <button class="the-btn">Add
+                                Comment</button>
+                        </h2>
+                        <h2 class="answer-minus" *ngIf="!shComm" (click)="showComment()"> <button
+                                class="the-btn">Close</button>
+                        </h2> -->
+
+                    </div>
+                    <div class="postcomment" >
+
+                        <form [formGroup]="form1" *ngIf="question?.userId!==userId">
+                            <div><textarea name="" id="" cols="100" rows="2" placeholder="Add Comment Here"
+                                    formControlName="Description"> </textarea></div>
+                            <!-- <div><button class="the-btn" (click)="addComment()">Add Comment</button></div> -->
+                        </form>
+                    </div>
                 </div>
 
             </div>
 
         </div>
 
-        <!-- <div class="postanswer" *ngIf="shqQuiz">
-            <form>
-                <textarea name="" id="" cols="100" rows="10" placeholder="Post your Answer Here"> </textarea>
-                <button>Post Answer</button>
+
+        <!-- <div class="postcomment" *ngIf="!shComm">
+
+            <form [formGroup]="form1" *ngIf="question?.userId!==userId">
+                <div><textarea name="" id="" cols="100" rows="10" placeholder="Add Comment Here"
+                        formControlName="Description"> </textarea></div>
+                <div><button class="the-btn" (click)="addComment()">Add Comment</button></div>
             </form>
         </div> -->
 
-        <div class="comment" *ngIf="shAnsw">
-            <div class="head">
-                <p>Comment</p>
-            </div>
-            <p>
-                You will have to submit a support request through AWS Contact Us page. Open the I cannot login
-                to my
-                AWS Account and then Lost account information. Hope that helps.
-            </p>
-        </div>
-
-        <div class="postcomment"  *ngIf="shAnsw">
-            <form [formGroup]= "form1" *ngIf="question?.userId!==userId">
-                <div><textarea name="" id="" cols="100" rows="10" placeholder="Add Comment Here" formControlName="Description"> </textarea></div> 
-                <!-- <div><button (click)="addComment()">Add Comment</button></div> -->
-            </form>
-        </div>
-
     </div>
-    
+
 </div>

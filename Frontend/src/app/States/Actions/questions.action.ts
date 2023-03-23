@@ -12,6 +12,21 @@ export const loadQuestionsFailure= createAction('[allQuestions]-loadQuestionsFai
 export const loadSingleQuestionId= createAction('[oneQuestion]-load Single Question by Id',props<{id:string}>())
 
 
+export const loadSingleQuestion = createAction('[oneQuestion]-loadSingleQuestion',props<{id:string}>())
+
+export const loadSingleQuestionSuccess = createAction('[oneQuestion]-loadSingleQuestionSuccess', props<{ question:Questions}>())
+
+export const loadSingleQuestionFailure= createAction('[oneQuestion]-loadSingleQuestionFailure',props<{error:string}>())
+
+
+
+export const loadUserQuestions = createAction('[userQuestions]-loadUserQuestions')
+
+export const loadUserQuestionsSuccess = createAction('[userQuestions]-loadUserQuestionsSuccess', props<{ questions:Questions[] }>())
+
+export const loadUserQuestionsFailure= createAction('[userQuestions]-loadUserQuestionsFailure',props<{error:string}>())
+
+
 export const addquestion = createAction('[addquestion]-addquestion',props<{addedQuestion:addQuestion}>())
 
 export const addquestionSuccess = createAction('[addquestion]-addquestionSuccess',props<{message:Message}>())

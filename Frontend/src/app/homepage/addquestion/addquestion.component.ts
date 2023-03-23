@@ -1,9 +1,13 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormBuilder, FormGroup, Validators,ReactiveFormsModule } from '@angular/forms';
-import { addQuestion } from '../../Interfaces/question';
+import { addQuestion, Questions } from '../../Interfaces/question';
 import { QuestionService } from '../../Services/QuestionsService/questionservice';
 import { ActivatedRoute, Router, RouterModule } from '@angular/router';
+import { AppState } from 'src/app/app.state';
+import { addquestion, loadQuestions } from 'src/app/States/Actions/questions.action';
+import { Store } from '@ngrx/store';
+import { allQuestions } from 'src/app/States/Reducers/question.reducer';
 
 @Component({
   selector: 'app-addquestion',
@@ -13,7 +17,8 @@ import { ActivatedRoute, Router, RouterModule } from '@angular/router';
   styleUrls: ['./addquestion.component.css']
 })
 export class AddquestionComponent implements OnInit {
-  constructor(private fb:FormBuilder, private questionService:QuestionService,private router:Router, private route:ActivatedRoute){}
+  questions!:Questions[];
+  constructor(private fb:FormBuilder, private questionService:QuestionService,private router:Router, private route:ActivatedRoute, private store:Store<AppState>){}
   form!: FormGroup;
 
 
@@ -27,11 +32,15 @@ export class AddquestionComponent implements OnInit {
   }
 
   submitData(){
-    this.questionService.addQuiz(this.form.value).subscribe()
-    // console.log(this.form.value);
-    
-    this.form.reset()
+    this.store.dispatch(addquestion({addedQuestion:this.form.value}))
+    this.store.select(allQuestions).subscribe((questions)=>
+    this.questions=questions)
     this.router.navigate(['/home'])
+
+    // this.questionService.addQuiz(this.form.value).subscribe()
+    // this.form.reset()
+    // this.store.dispatch(loadQuestions()) 
+    // this.router.navigate(['/home/myquestions'])
 
     
   }

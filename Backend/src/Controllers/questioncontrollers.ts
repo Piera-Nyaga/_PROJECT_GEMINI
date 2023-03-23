@@ -35,7 +35,7 @@ export async function postQuestion(req: ExtendedRequest, res: Response) {
 
     }
     catch (error) {
-        res.status(500).json(error)
+        return res.status(500).json(error)
     }
 }
 
@@ -54,7 +54,7 @@ export const getallQuestions: RequestHandler = async (req, res) => {
 export const getoneQuestion = async (req: ExtendedRequest, res: Response) => {
     try {
         const id = req.params.id
-        const question: Question = await (await _db.exec('getquestionbyId', { id })).recordset[0]
+        const question: Question = await (await _db.exec('getQuestionContent', { questionId:id })).recordset[0]
         if (!question) {
             return res.status(404).json({ error: 'Question Not Found' })
         }
@@ -71,7 +71,7 @@ export const getoneQuestion = async (req: ExtendedRequest, res: Response) => {
 export const getUserQuestions = async (req: ExtendedRequest, res: Response) => {
     try {
 
-        console.log(req.info);
+        // console.log(req.info);
         
         if(req.info){
         const userId = req.info.Id
@@ -116,7 +116,7 @@ export const updateQuestion = async (req: ExtendedRequest, res: Response) => {
         return res.status(404).json({ error: 'Question Not Found' })
     }
     catch (error) {
-        res.status(500).json(error)
+        return res.status(500).json(error)
     }
 }
 
@@ -138,6 +138,6 @@ export const deleteQuestion = async (req: ExtendedRequest, res: Response) => {
     }
 
         catch (error) {
-            res.status(500).json(error)
+            return res.status(500).json(error)
         }
     }

@@ -1,7 +1,12 @@
 import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
 import { ActivatedRoute, Params, Router, RouterModule } from '@angular/router';
-import { Questions } from '../../Interfaces/question';
+import { Store } from '@ngrx/store';
+import { AppState } from 'src/app/app.state';
+import { deletequestion, loadSingleQuestionId } from 'src/app/States/Actions/questions.action';
+import { allQuestions, getOneQuestion, myQuestions } from 'src/app/States/Reducers/question.reducer';
+// import { getSingleQuestion } from 'src/app/States/Reducers/question.reducer';
+import { Answer, Questions, Vote, Comment } from '../../Interfaces/question';
 import { QuestionService } from '../../Services/QuestionsService/questionservice';
 
 @Component({
@@ -12,28 +17,50 @@ import { QuestionService } from '../../Services/QuestionsService/questionservice
   styleUrls: ['./questiondetails.component.css']
 })
 export class QuestiondetailsComponent {
-  question?:Questions;
- id!:string
+  id!:string
+  question!:Questions
+  questions:Questions[]=[]
+  answers:Answer[]=[]
+  comments:Comment[]=[]
+  votes!:Vote[]
+  
+  
 
- constructor(private route:ActivatedRoute, private questionService:QuestionService,private router:Router){
-
- }
-
+ constructor(private route:ActivatedRoute, private questionService:QuestionService,private router:Router, private store:Store<AppState>){}
+ 
   shqQuiz=false;
   shAnsw = false;
   ShowQuestion(){
     this.shqQuiz=!this.shqQuiz
   }
-  showAnsw(){
+  showAnswer(){
     this.shAnsw=!this.shAnsw
   }
+
   ngOnInit(): void {
-    this.route.params.subscribe((params:Params)=>{
-      this.id=params['id']
-      this.questionService.getOneQuiz(params['id']).subscribe((question)=>
+    this.route.params.subscribe((param:Params)=>{
+      this.id=param['id']
+      this.store.dispatch(loadSingleQuestionId({id:param['id']}))
+    })
+    
+    this.store.select(getOneQuestion).subscribe(question=>{
+      if(question){
         this.question=question
-      ) 
-  })
+      }
+    })
+  //   this.route.params.subscribe((params:Params)=>{
+  //     this.id=params['id']
+  //     this.questionService.getOneQuiz(params['id']).subscribe((question)=>{
+  //       if (question) {
+  //       this.question=question
+  //       const userJson = localStorage.getItem('currentUser');
+  //       this.currentUser = userJson !== null ? JSON.parse(question.answers) : this.Answers;
+  //       this.Answers=JSON.parse(question.answers) 
+        
+  //       }
+  //     }  
+  //     ) 
+  // })
      
   }
 
@@ -42,8 +69,12 @@ export class QuestiondetailsComponent {
     }
 
   Delete(){
-      this.questionService.deleteQuiz(this.id).subscribe()
-      this.router.navigate(['../../'],{relativeTo:this.route})
+    this.store.dispatch(deletequestion({id:this.id}))
+    this.store.select(myQuestions).subscribe((questions)=>
+    this.questions=questions)
+    this.router.navigate(['/home/myquestions'])
+      // this.questionService.deleteQuiz(this.id).subscribe()
+      // this.router.navigate(['../../'],{relativeTo:this.route})
 
   }
 }

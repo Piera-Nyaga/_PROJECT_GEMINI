@@ -1,12 +1,15 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { Questions, Answer } from '../../Interfaces/question';
+import { Questions, Answer, Comment } from '../../Interfaces/question';
 import { ActivatedRoute, Params, Router, RouterModule } from '@angular/router';
 import { QuestionService } from '../../Services/QuestionsService/questionservice';
 import { FormBuilder, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { userSlice } from "../../States/Reducers/user.reducer";
 import { Store } from '@ngrx/store';
 import { AppState } from 'src/app/app.state';
+import { loadQuestions, loadSingleQuestion, loadSingleQuestionId } from 'src/app/States/Actions/questions.action';
+import { allQuestions, fullquestion, getOneQuestion, getSingleQuestion } from 'src/app/States/Reducers/question.reducer';
+
 
 @Component({
   selector: 'app-onequestion',
@@ -18,7 +21,8 @@ import { AppState } from 'src/app/app.state';
 
 export class OnequestionComponent implements OnInit{
  question?:Questions;
- answer?:Answer;
+ answers!:Answer[]
+ comments!:Comment[]
  id!:string
  userId:string=''
 
@@ -27,30 +31,38 @@ export class OnequestionComponent implements OnInit{
  form1!:FormGroup;
  shqQuiz=false;
  shAnsw = false;
+ shComm=false;
 
   ShowQuestion(){
     this.shqQuiz=!this.shqQuiz
   }
 
-  showAnsw(){
+  showAnswer(){
     this.shAnsw=!this.shAnsw
+  }
+  showComment(){
+    this.shComm=!this.shComm
   }
 
   ngOnInit(): void {
-    this.route.params.subscribe((params:Params)=>{
-      this.id=params['id']
-      this.questionService.getOneQuiz(params['id']).subscribe((question)=>
-      {
-        if(question){
-          this.question=question
-          // this.userId= question.userId
-        } 
-      }
-      ) 
-  })
-
-  this.store.select(userSlice).subscribe((user)=>{
+    this.route.params.subscribe((param:Params)=>{
+      this.id=param['id']
+      this.store.dispatch(loadSingleQuestionId({id:param['id']}))
+      this.store.dispatch(loadSingleQuestion({id:param['id']}))
+    })
+    
+    this.store.select(getSingleQuestion).subscribe(question=>{
+    if(question){
+      this.question=question
+      console.log(question);
+      let x=JSON.parse(question.Answers)
+      this.answers=x
+    }
+    })
+    this.store.select(userSlice).subscribe((user)=>{
     this.userId= user.userData?.userId
+    console.log(this.userId); 
+    console.log(this.question);
     
   })
 
@@ -65,8 +77,11 @@ export class OnequestionComponent implements OnInit{
   }
 
   addAnswer(){
-    this.questionService.addAnswer({...this.form.value, questionId:this.question?.Id, userId:this.userId}).subscribe()
+    this.questionService.addAnswer({...this.form.value, questionId:this.question?.Id}).subscribe(answer=>{
+    console.log(answer);
+    })
     this.form.reset()
+    this.store.dispatch(loadQuestions())
   }  
 
   // addComment(){

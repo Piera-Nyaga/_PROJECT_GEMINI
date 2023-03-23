@@ -21,3 +21,10 @@ export class Question{
       public Description:string, public Code:string, 
       public createdAt:string, public userId?:string){}
 }
+
+export class Answer{
+  constructor(
+    public Id:string, public Description:string, 
+      public createdAt:string, public questionId?:string, public userId?:string){}
+}
+

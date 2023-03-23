@@ -8,6 +8,8 @@
 }
 
 .info{
+    width: 100%;
+    padding: 10px;
     display: flex;
     flex-direction: column;
 
@@ -62,4 +64,8 @@ button{
 }
 .meta p, .head p{
     color: #CC6222;
+}
+
+.description p{
+    color:#0077CC;
 }

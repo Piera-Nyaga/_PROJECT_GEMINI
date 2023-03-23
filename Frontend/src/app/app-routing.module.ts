@@ -7,7 +7,7 @@ const routes: Routes = [
   { path: 'register', loadComponent: () => import('./Auth/register/register.component').then(c => c.RegisterComponent) },
   { path: 'login', loadComponent: () => import('./Auth/login/login.component').then(c => c.LoginComponent) },
   {
-    path: 'home', canActivate:[AuthGuardService], loadComponent: () => import('./homepage/homepage.component').then(c => c.HomepageComponent),
+    path: 'home',canActivate:[AuthGuardService], loadComponent: () => import('./homepage/homepage.component').then(c => c.HomepageComponent),
     children: [
       { path: '', loadComponent: () => import('./homepage/allquestions/allquestions.component').then(c => c.AllquestionsComponent) },
       { path: 'myquestions', loadComponent: () => import('./homepage/myquestions/myquestions.component').then(c => c.MyquestionsComponent) },
@@ -30,7 +30,7 @@ const routes: Routes = [
   {
     path: 'admin', loadComponent: () => import('./admin/admin.component').then(c => c.AdminComponent),
     children: [
-      { path: '', loadComponent: () => import('./admin/users/users.component').then(c => c.UsersComponent) },
+      { path: 'users', loadComponent: () => import('./admin/users/users.component').then(c => c.UsersComponent) },
       { path: 'questions', loadComponent: () => import('./admin/questions/questions.component').then(c => c.QuestionsComponent) },
     ]
   }

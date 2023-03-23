@@ -1,4 +1,3 @@
-
 .section-1{
     /* background-color: azure; */
     width: 100%;
@@ -8,6 +7,8 @@
 }
 
 .info{
+    width: 100%;
+    padding: 10px;
     display: flex;
     flex-direction: column;
 
@@ -42,10 +43,10 @@
     gap: 5px;
 }
 .upvote .fa-arrow-up, .downvote .fa-arrow-down{
-    color: #CC6222;
+    color:#CC6222;
     font-size: 2rem;
 }
-button{
+.the-btn{
     height: 30px;
     width: 100px;
     border: 0.5em;

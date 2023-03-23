@@ -1,10 +1,19 @@
 export interface User {
     Id?: string
-    Username:string
+    UserName:string
     Email:string
     Password:string
     ConfirmPassword:string
 }
+export interface AdminUser {
+    Id: string
+    UserName:string
+    Email:string
+    Password:string
+    ConfirmPassword:string
+}
+
+
 export interface LoginUser{
     Email:string
     Password:string

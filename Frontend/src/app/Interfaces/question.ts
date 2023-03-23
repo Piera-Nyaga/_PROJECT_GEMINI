@@ -13,8 +13,7 @@ export interface Questions{
     Code?:string
     createdAt:string
     userId:string
-    answer:Answer[]
-    
+    Answers:any
 }
 export interface Message{
     message:string
@@ -30,7 +29,7 @@ export interface Answer{
     Code?:string
     createdAt:string
     votes:Vote[]
-    comment:Comment[]
+    comments:Comment[]
     userId:string
     questionId:string
 }

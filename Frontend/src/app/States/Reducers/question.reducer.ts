@@ -1,11 +1,13 @@
 import { createFeatureSelector, createReducer, createSelector, on } from "@ngrx/store";
 import { Questions } from "src/app/Interfaces/question";
-import { addquestionFailure, addquestionSuccess, deletequestionFailure, deletequestionSuccess, loadQuestions, loadQuestionsFailure, loadQuestionsSuccess, loadSingleQuestionId, updatequestionFailure, updatequestionSuccess } from "../Actions/questions.action";
+import { addquestionFailure, addquestionSuccess, deletequestionFailure, deletequestionSuccess,loadUserQuestionsSuccess, loadUserQuestionsFailure, loadQuestionsFailure, loadQuestionsSuccess, loadSingleQuestionId, updatequestionFailure, updatequestionSuccess, loadSingleQuestionSuccess, loadSingleQuestionFailure } from "../Actions/questions.action";
 
 
 export interface QuestionInterface {
     questions: Questions[];
-    Id: string
+    userQuestions:Questions[];
+    questionId: string
+    singleQuestion:Questions|null,
     successonAdd: string
     erroronAdd: string
     erroronUpdate: string
@@ -17,7 +19,9 @@ export interface QuestionInterface {
 
 export const intialState: QuestionInterface = {
     questions: [],
-    Id: '',
+    userQuestions:[],
+    questionId: '',
+    singleQuestion:null,
     successonAdd: '',
     erroronAdd: '',
     erroronUpdate: '',
@@ -26,17 +30,19 @@ export const intialState: QuestionInterface = {
     error: ''
     
 };
-const questionSliceState= createFeatureSelector<QuestionInterface>('booking')
+const questionSliceState= createFeatureSelector<QuestionInterface>('question')
 
-export const oneQuestion= createSelector(questionSliceState, state=>state.questions)
-const oneQuestionId= createSelector(questionSliceState, state=>state.Id)
+export const allQuestions= createSelector(questionSliceState, state=>state.questions)
+export const myQuestions= createSelector(questionSliceState, state=>state.userQuestions)
 
-
-export const getSingleBooking=createSelector(oneQuestion,oneQuestionId,(state,id)=>{
-    return state.find(x=>x.Id===id)
+const oneQuestion= createSelector(questionSliceState, state=>state.questionId)
+export const fullquestion=createSelector(questionSliceState, state=>state.singleQuestion)
+export const getSingleQuestion =createSelector(questionSliceState, state=>state.singleQuestion)
+export const getOneQuestion=createSelector(allQuestions,oneQuestion,(state,id)=>{
+return state.find(z=>z.Id==id)
 })
 
-export const questionReducerr=createReducer<QuestionInterface>(
+export const questionReducer=createReducer<QuestionInterface>(
     intialState,
 
     on(loadQuestionsSuccess, (state,action):QuestionInterface=>{
@@ -45,22 +51,54 @@ export const questionReducerr=createReducer<QuestionInterface>(
         error:'',
         questions:action.questions
        } 
-    })
-    ,on(loadQuestionsFailure, (state,action):QuestionInterface=>{
+    }),
+    on(loadQuestionsFailure, (state,action):QuestionInterface=>{
         return {
          ...state,
          questions:[],
          error:action.error
          
         } 
-     })
-     ,on(loadSingleQuestionId, (state,action):QuestionInterface=>{
+     }),
+     on(loadSingleQuestionSuccess,(state,action):QuestionInterface=>{
+      return{
+      ...state,
+      error:'',
+      singleQuestion:action.question
+   }
+
+     }),
+     on(loadSingleQuestionFailure,(state,action):QuestionInterface=>{
+      return{
+      ...state,
+      error:action.error,
+      singleQuestion:null
+   }
+
+     }),
+     on(loadUserQuestionsSuccess, (state,action):QuestionInterface=>{
+      return {
+       ...state,
+       error:'',
+       userQuestions:action.questions
+      } 
+   }),
+   on(loadUserQuestionsFailure, (state,action):QuestionInterface=>{
+       return {
+        ...state,
+        userQuestions:[],
+        error:action.error
+        
+       } 
+    }),
+     on(loadSingleQuestionId, (state,action):QuestionInterface=>{
         return {
          ...state,
-         Id:action.id
+         questionId:action.id
          
         } 
      }),
+
      on(addquestionSuccess, (state,action):QuestionInterface=>{
         return {
          ...state,
@@ -80,11 +118,9 @@ export const questionReducerr=createReducer<QuestionInterface>(
         } 
      }),
      on(updatequestionSuccess, (state,action):QuestionInterface=>{
-
         const updatedQuestion=state.questions.map(item=>{
             return item.Id===action.question.Id?action.question:item
         })
-
         return {
          ...state,
          erroronUpdate:'',
@@ -93,7 +129,6 @@ export const questionReducerr=createReducer<QuestionInterface>(
         } 
      }),
      on(updatequestionFailure, (state,action):QuestionInterface=>{
-
         return {
          ...state,
          erroronUpdate:action.error
@@ -101,7 +136,6 @@ export const questionReducerr=createReducer<QuestionInterface>(
         } 
      }),
      on(deletequestionSuccess, (state,action):QuestionInterface=>{
-
         return {
          ...state,
          successonDelete:action.message.message,
@@ -111,7 +145,6 @@ export const questionReducerr=createReducer<QuestionInterface>(
         } 
      }),
      on(deletequestionFailure, (state,action):QuestionInterface=>{
-
         return {
          ...state,
          erroronDelete:action.error,

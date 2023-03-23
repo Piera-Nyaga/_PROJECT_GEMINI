@@ -11,6 +11,16 @@ export class AuthService {
   constructor(private router:Router) { }
 
   isLoggedIn=false
+  // private role=''
+  // private UserName=''
+
+  // getName(){
+  //   return this.UserName
+  //   }
+  
+  // getRole(){
+  //     return this.role
+  //     }
   
 
   getAuthStatus():Promise<boolean>{

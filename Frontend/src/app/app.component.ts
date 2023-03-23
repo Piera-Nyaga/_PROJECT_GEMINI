@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { AppState } from './app.state';
+import { AuthService } from './Services/Auth/authservice';
 
 @Component({
   selector: 'app-root',
@@ -10,5 +11,5 @@ import { AppState } from './app.state';
 export class AppComponent {
   title = 'THE GATEWAY';
 
-  constructor(private store:Store<AppState>){}
+  constructor(public auth:AuthService,private store:Store<AppState>){}
 }

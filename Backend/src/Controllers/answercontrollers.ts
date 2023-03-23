@@ -6,29 +6,34 @@ import { DatabaseHelper } from '../Databasehelpers/index'
 import { sqlConfig } from '../Config/config'
 import mssql from 'mssql'
 import { AddAnswerSchema } from '../Helpers/validateAnswer'
+import { Answer, Decoded } from '../Models'
 
 const _db = new DatabaseHelper()
 dotenv.config({ path: path.resolve(__dirname, '../../.env') })
 
 interface ExtendedRequest extends Request {
     body: {Description: string, userId: string, questionId: string }
+    info?: Decoded
+    
+
 }
 
 
 //POST ANSWER
 export async function postAnswer(req: ExtendedRequest, res: Response) {
     try {
+        if(req.info){
         const id = uid()
-        console.log(req.body);
         const createdAt: string = new Date().toISOString()
-        const {Description, userId, questionId } = req.body
+        const {Description, questionId,userId } = req.body
         const {error}= AddAnswerSchema.validate(req.body)
 
         if(error){
             return res.status(422).json(error)
         }
-        await _db.exec('postAnswer ', { id: id, Description, userId, questionId, createdAt })
+        await _db.exec('postAnswer ', { id: id, Description, userId:req.info.Id, questionId:questionId, createdAt })
         return res.status(201).json({ message: 'Answer added' })
+    }
 
     }
     catch (error) {

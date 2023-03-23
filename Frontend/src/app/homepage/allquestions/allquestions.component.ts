@@ -1,10 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Store } from '@ngrx/store';
-import { loadQuestions } from '../../States/Actions/questions.action';
-import { Questions } from '../../Interfaces/question';
+import { loadQuestions, loadSingleQuestionId } from '../../States/Actions/questions.action';
+import { Answer, Questions } from '../../Interfaces/question';
 import { QuestionService } from '../../Services/QuestionsService/questionservice';
 import { ActivatedRoute, Router, RouterModule } from '@angular/router';
+import { AppState } from 'src/app/app.state';
+import { allQuestions } from 'src/app/States/Reducers/question.reducer';
 
 @Component({
   selector: 'app-allquestions',
@@ -16,24 +18,28 @@ import { ActivatedRoute, Router, RouterModule } from '@angular/router';
 export class AllquestionsComponent {
 
   questions:Questions[]=[]
+  answers:Answer[]=[]
+  id!:string
 
-constructor(private questionService:QuestionService, private router:Router, private route:ActivatedRoute){}
+constructor(private questionService:QuestionService, private router:Router, private route:ActivatedRoute, private store:Store<AppState>){}
 
 
 ngOnInit(): void {
-  this.questionService.getQuiz().subscribe((questions)=>{
-  this.questions=questions
-  // console.log("quesions",this.questions);
-}
-  )
-  
+  this.store.dispatch(loadQuestions())
+  this.store.select(allQuestions).subscribe((questions)=>
+  this.questions=questions)
   
 }
 
-getOneQuiz(id:string){
-  // let oneQuestion
-  this.questionService.getOneQuiz(id)
+  
+getOneQuiz(){
+  this.store.dispatch(loadSingleQuestionId({id:this.id})) 
+}
+// getOneQuiz(id:string){
+//   this.questionService.getOneQuiz(id)
+// }
 }
 
-  
-}
+
+
+

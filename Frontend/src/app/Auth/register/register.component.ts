@@ -16,7 +16,7 @@ import { Store } from '@ngrx/store';
   styleUrls: ['./register.component.css']
 })
 export class RegisterComponent implements OnInit{
-  user: User ={ Username:'', Email:'', Password:'', ConfirmPassword:'' };
+  user: User ={ UserName:'', Email:'', Password:'', ConfirmPassword:'' };
   error = '';
   form!: FormGroup
 

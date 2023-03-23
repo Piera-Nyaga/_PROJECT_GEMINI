@@ -34,7 +34,7 @@ export class QuestionService {
   }
 
   getOneQuiz(id:string):Observable<Questions>{
-    return this.http.get<Questions>(`http://localhost:4000/questions/questions/${id}`)
+    return this.http.get<Questions>(`http://localhost:4000/questions/question/${id}`)
   }
 
   getmyQuiz():Observable<Questions[]>{
@@ -42,11 +42,11 @@ export class QuestionService {
   }
   
   updateQuiz(id:string, updatedquestion:addQuestion){
-    return this.http.patch<addQuestion>(`http://localhost:4000/questions/update/${id}`,updatedquestion)
+    return this.http.patch<Questions>(`http://localhost:4000/questions/update/${id}`,updatedquestion)
   }
 
   deleteQuiz(id:string):Observable<Message>{
-    return  this.http.delete<Message>(`http://localhost:4000/questions/delete/tumiaakili/${id}`)
+    return  this.http.delete<Message>(`http://localhost:4000/questions/delete/${id}`)
    }
    
   addAnswer(answer:addAnswer):Observable<Message>{
@@ -56,6 +56,7 @@ export class QuestionService {
   addComment(comment:addComment):Observable<Message>{
     return this.http.post<Message>('http://localhost:4000/comments/post',comment)
   }
+
   addVote(vote:Vote):Observable<Message>{
     return this.http.post<Message>('http://localhost:4000/votes/add',vote)
   }

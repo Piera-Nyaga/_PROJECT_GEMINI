@@ -83,7 +83,7 @@ export async function loginUser(req: ExtendedRequest, res: Response) {
     }
 }
 
-//UPDATE USER payload[0]
+//UPDATE USER 
 export async function updateUser(req: ExtendedRequest, res: Response) {
     try {
         const id = req.params.id

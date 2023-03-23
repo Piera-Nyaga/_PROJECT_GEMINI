@@ -2,7 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Router, RouterModule } from '@angular/router';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
-import { UserService } from 'src/app/Services/Auth/userservice';
 import { AppState } from 'src/app/app.state';
 import { Store } from '@ngrx/store';
 import { login } from 'src/app/States/Actions/user.action';
@@ -17,7 +16,7 @@ import { login } from 'src/app/States/Actions/user.action';
 export class LoginComponent implements OnInit {
   
   form!:FormGroup
-  constructor(private fb:FormBuilder, private userService :UserService, private router:Router, private store:Store<AppState>){}
+  constructor(private fb:FormBuilder,private router:Router, private store:Store<AppState>){}
 
   ngOnInit(): void {
     this.form = this.fb.group({

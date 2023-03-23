@@ -7,8 +7,11 @@ import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { EffectsModule } from '@ngrx/effects';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { UserEffects } from './States/Effects/user.effects';
+import { QuestionEffect } from "./States/Effects/question.effects";
 import { userReducer } from './States/Reducers/user.reducer';
+import { questionReducer } from './States/Reducers/question.reducer';
 import { TokenInterceptorService } from "../app/Services/tokeninterceptor.service";
+
 
 @NgModule({
   declarations: [
@@ -19,9 +22,9 @@ import { TokenInterceptorService } from "../app/Services/tokeninterceptor.servic
     BrowserModule,
     AppRoutingModule,
     HttpClientModule,
-    StoreModule.forRoot({user:userReducer}),
+    StoreModule.forRoot({user:userReducer, question:questionReducer}),
     StoreDevtoolsModule.instrument({ maxAge: 25, logOnly: !isDevMode() }),
-    EffectsModule.forRoot([UserEffects])
+    EffectsModule.forRoot([UserEffects,QuestionEffect])
   
   ],
   providers: [{provide:HTTP_INTERCEPTORS, useClass:TokenInterceptorService, multi:true}],

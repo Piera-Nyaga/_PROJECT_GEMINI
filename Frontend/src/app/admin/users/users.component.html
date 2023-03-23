@@ -1,17 +1,17 @@
 <table>
-    <th>User_Id</th>
+    <th>UserId</th>
     <th>UserName</th>
     <th>Email</th>
-    <th> Delete</th>
+    <th>Delete</th>
 
-    <tr>
-      <td>#WIERTS878</td>
-      <td>Jane</td>
-      <td>janedoe@gmail.com</td>
-      <td class="td-btn"><i class="fa-solid fa-trash"></i></td>
-    </tr>
+    <tr  *ngFor="let one of users$ |async">
+      <td>{{one.Id}}</td>
+      <td>{{one.UserName}}</td>
+      <td>{{one.Email}}</td>
+      <td class="td-btn"><button (click)="DeleteUser(one.Id)"><i class="fa-solid fa-trash"></i></button></td>
+    </tr> 
 
-    <tr>
+    <!-- <tr>
         <td>#WIERTS878</td>
         <td>Jane</td>
         <td>janedoe@gmail.com</td>
@@ -30,5 +30,6 @@
         <td>Jane</td>
         <td>janedoe@gmail.com</td>
         <td class="td-btn"><i class="fa-solid fa-trash"></i></td>
-      </tr>
-  </table>
+      </tr> -->
+
+    </table>

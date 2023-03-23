@@ -26,6 +26,9 @@
 .title h3{
     color:#0077CC;
 }
+.title h3:hover{
+    cursor: pointer;
+}
 .user h4{
     color:#0077CC;
 }
