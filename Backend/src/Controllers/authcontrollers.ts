@@ -1,7 +1,7 @@
 import { RequestHandler, Request, Response } from 'express'
 import { v4 as uid } from 'uuid'
 import { LoginSchema, RegistrationSchema } from '../Helpers/validateUser'
-import { Decoded, User } from '../Models/index'
+import { DecodedData, User } from '../Models/index'
 import Bcrypt from 'bcrypt'
 import dotenv from 'dotenv'
 import path from 'path'
@@ -15,7 +15,7 @@ dotenv.config({ path: path.resolve(__dirname, '../../.env') })
 
 interface ExtendedRequest extends Request {
     body: { UserName: string, Email: string, Password: string, ConfirmPassword: string }
-    info?: Decoded
+    info?: DecodedData
 }
 
 
@@ -76,7 +76,7 @@ export async function loginUser(req: ExtendedRequest, res: Response) {
             return rest
         })
         const token = jwt.sign(payload[0], process.env.SECRETKEY as string , {expiresIn:'3600s'})
-        return res.status(200).json({ message: 'User Loggedin!!!', token, userId: `${user[0].Id}`})
+        return res.status(200).json({ message: 'User Loggedin!!!', token, userId: `${user[0].Id}`, Role: `${user[0].Role}`})
 
     } catch (error: any) {
         res.status(500).json(error.message)

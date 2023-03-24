@@ -8,7 +8,7 @@ import { userSlice } from "../../States/Reducers/user.reducer";
 import { Store } from '@ngrx/store';
 import { AppState } from 'src/app/app.state';
 import { loadQuestions, loadSingleQuestion, loadSingleQuestionId } from 'src/app/States/Actions/questions.action';
-import { allQuestions, fullquestion, getOneQuestion, getSingleQuestion } from 'src/app/States/Reducers/question.reducer';
+import { allQuestions,getOneQuestion, getSingleQuestion } from 'src/app/States/Reducers/question.reducer';
 
 
 @Component({
@@ -21,10 +21,12 @@ import { allQuestions, fullquestion, getOneQuestion, getSingleQuestion } from 's
 
 export class OnequestionComponent implements OnInit{
  question?:Questions;
- answers!:Answer[]
+ answers?:Answer[]
  comments!:Comment[]
  id!:string
  userId:string=''
+ answerid:string=''
+countAns!:Answer[]
 
  constructor(private route:ActivatedRoute, private questionService:QuestionService,private router:Router, private fb:FormBuilder, private store:Store<AppState>){}
  form!: FormGroup;
@@ -54,16 +56,14 @@ export class OnequestionComponent implements OnInit{
     this.store.select(getSingleQuestion).subscribe(question=>{
     if(question){
       this.question=question
-      console.log(question);
       let x=JSON.parse(question.Answers)
       this.answers=x
+      this.countAns=x
     }
     })
+
     this.store.select(userSlice).subscribe((user)=>{
-    this.userId= user.userData?.userId
-    console.log(this.userId); 
-    console.log(this.question);
-    
+    this.userId= user.userData?.userId 
   })
 
   this.form=this.fb.group({
@@ -77,16 +77,18 @@ export class OnequestionComponent implements OnInit{
   }
 
   addAnswer(){
-    this.questionService.addAnswer({...this.form.value, questionId:this.question?.Id}).subscribe(answer=>{
-    console.log(answer);
+    this.questionService.addAnswer({...this.form.value, questionId:this.question?.Id}).subscribe()
+    this.form.reset()
+    this.store.dispatch(loadQuestions())
+    this.store.select(allQuestions).subscribe()
+  }  
+  
+  addComment(answerId: string){
+    this.questionService.addComment({...this.form.value, answerid:answerId}).subscribe(comment=>{
+    console.log(comment);
     })
     this.form.reset()
     this.store.dispatch(loadQuestions())
-  }  
-
-  // addComment(){
-  //   this.questionService.addComment(...this.form1.value, answerId:this.answer?.Id, this.userId).subscribe()
-  //   this.form1.reset()
-  // }
+  } 
 
 }

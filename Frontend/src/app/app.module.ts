@@ -13,15 +13,18 @@ import { questionReducer } from './States/Reducers/question.reducer';
 import { TokenInterceptorService } from "../app/Services/tokeninterceptor.service";
 
 
+
 @NgModule({
   declarations: [
     AppComponent
+  
     
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     HttpClientModule,
+    
     StoreModule.forRoot({user:userReducer, question:questionReducer}),
     StoreDevtoolsModule.instrument({ maxAge: 25, logOnly: !isDevMode() }),
     EffectsModule.forRoot([UserEffects,QuestionEffect])

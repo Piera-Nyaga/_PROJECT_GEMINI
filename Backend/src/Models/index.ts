@@ -5,13 +5,13 @@ export class User{
 }
 
 
-export interface Decoded{
+export interface DecodedData{
   Id: string,
   UserName:string,
   Email:string,
   Role: string,
-  // iat: number
-  // exp: number
+  iat: number
+  exp: number
 }
 
 
@@ -28,3 +28,10 @@ export class Answer{
       public createdAt:string, public questionId?:string, public userId?:string){}
 }
 
+export interface Comment{
+  Id:string
+  Description:string
+  userId:string
+  answeId:string
+  
+}

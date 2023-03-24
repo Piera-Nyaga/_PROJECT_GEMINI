@@ -61,4 +61,8 @@ export class QuestionService {
     return this.http.post<Message>('http://localhost:4000/votes/add',vote)
   }
 
+  markPreferred(id:string):Observable<Message>{
+    return this.http.patch<Message>(`http://localhost:4000/answers/preferred/${id}`, id)
+  }
+
 }

@@ -3,8 +3,8 @@ import { Component } from '@angular/core';
 import { ActivatedRoute, Params, Router, RouterModule } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { AppState } from 'src/app/app.state';
-import { deletequestion, loadSingleQuestionId } from 'src/app/States/Actions/questions.action';
-import { allQuestions, getOneQuestion, myQuestions } from 'src/app/States/Reducers/question.reducer';
+import { deletequestion, loadSingleQuestion, loadSingleQuestionId } from 'src/app/States/Actions/questions.action';
+import { allQuestions, getOneQuestion, getSingleQuestion, myQuestions } from 'src/app/States/Reducers/question.reducer';
 // import { getSingleQuestion } from 'src/app/States/Reducers/question.reducer';
 import { Answer, Questions, Vote, Comment } from '../../Interfaces/question';
 import { QuestionService } from '../../Services/QuestionsService/questionservice';
@@ -23,6 +23,7 @@ export class QuestiondetailsComponent {
   answers:Answer[]=[]
   comments:Comment[]=[]
   votes!:Vote[]
+  countAns!:Answer[]
   
   
 
@@ -30,22 +31,30 @@ export class QuestiondetailsComponent {
  
   shqQuiz=false;
   shAnsw = false;
+  shComm = false;
   ShowQuestion(){
     this.shqQuiz=!this.shqQuiz
   }
   showAnswer(){
     this.shAnsw=!this.shAnsw
   }
+  showComment(){
+    this.shComm=!this.shComm
+  }
 
   ngOnInit(): void {
     this.route.params.subscribe((param:Params)=>{
       this.id=param['id']
       this.store.dispatch(loadSingleQuestionId({id:param['id']}))
+      this.store.dispatch(loadSingleQuestion({id:param['id']}))
     })
     
-    this.store.select(getOneQuestion).subscribe(question=>{
+    this.store.select(getSingleQuestion).subscribe(question=>{
       if(question){
         this.question=question
+        let x=JSON.parse(question.Answers)
+        this.answers=x
+        this.countAns=x
       }
     })
   //   this.route.params.subscribe((params:Params)=>{

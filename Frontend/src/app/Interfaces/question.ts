@@ -13,6 +13,7 @@ export interface Questions{
     Code?:string
     createdAt:string
     userId:string
+    UserName:string
     Answers:any
 }
 export interface Message{

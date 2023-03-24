@@ -7,6 +7,7 @@
             <div>
                 <h3>{{question?.Title}}</h3>
             </div>
+
             <div>
                 <h2 *ngIf="!shqQuiz" (click)="ShowQuestion()"> <button class="the-btn">+</button> </h2>
                 <h2 *ngIf="shqQuiz" (click)="ShowQuestion()"> <button class="the-btn">-</button> </h2>
@@ -18,25 +19,23 @@
             </p>
         </div>
 
-        <div class="metadata">
+        <div class="code">
+            <p>{{question?.Code}}
+            </p>
+        </div>
 
-            <div class="answer">10 Answers</div>
+        <div class="metadata">
+            <div class="answer">{{countAns?.length || 0}} Answers</div>
+
             <div class="user">
-                <h4> Jane Doe </h4>
+                    <h4> Posted by {{question?.UserName}}  On {{question?.createdAt | date: 'shortDate'}} </h4>
             </div>
-            <div class="time">{{question?.createdAt | date}} </div>
 
         </div>
 
     </div>
 
     <div class="shoUp" *ngIf="shqQuiz">
-
-        <div class="code">
-            <p>{{question?.Code}}
-            </p>
-        </div>
-
         <div class="postanswer" *ngIf="shqQuiz">
 
             <form [formGroup]="form" *ngIf="question?.userId!==userId">
@@ -50,10 +49,7 @@
 
             <div class="meta">
                 <div>
-                    <p>Answer</p>
-                </div>
-                <div>
-                    <p>10 votes</p>
+                    <p>Answers</p>
                 </div>
             </div>
 
@@ -69,12 +65,14 @@
                     <p> {{answer.Description}}</p>
                 </div>
 
-                <div>
-                    <h2 class="answer-minus" *ngIf="!shAnsw" (click)="showAnswer()"> <button class="the-btn">Comments</button>
+                <!-- <div>
+                    <h2 class="answer-minus" *ngIf="!shAnsw" (click)="showAnswer()"> <button
+                            class="the-btn">Comments</button>
                     </h2>
-                    <h2 class="answer-minus" *ngIf="shAnsw" (click)="showAnswer()"> <button class="the-btn">Close</button>
+                    <h2 class="answer-minus" *ngIf="shAnsw" (click)="showAnswer()"> <button
+                            class="the-btn">Close</button>
                     </h2>
-                </div>
+                </div> -->
 
                 <div class="comment" *ngIf="shAnsw">
                     <div class="head">
@@ -86,20 +84,19 @@
                     </div>
 
                     <div>
-                        <!-- <h2 class="answer-minus" *ngIf="shComm" (click)="showComment()"> <button class="the-btn">Add
+                        <h2 class="answer-minus" *ngIf="shComm" (click)="showComment()"> <button class="the-btn">Add
                                 Comment</button>
                         </h2>
                         <h2 class="answer-minus" *ngIf="!shComm" (click)="showComment()"> <button
                                 class="the-btn">Close</button>
-                        </h2> -->
+                        </h2>
 
                     </div>
-                    <div class="postcomment" >
-
+                    <div class="postcomment">
                         <form [formGroup]="form1" *ngIf="question?.userId!==userId">
                             <div><textarea name="" id="" cols="100" rows="2" placeholder="Add Comment Here"
                                     formControlName="Description"> </textarea></div>
-                            <!-- <div><button class="the-btn" (click)="addComment()">Add Comment</button></div> -->
+                            <div><button class="the-btn" (click)="addComment(answer.Id)">Add Comment</button></div>
                         </form>
                     </div>
                 </div>
@@ -107,16 +104,6 @@
             </div>
 
         </div>
-
-
-        <!-- <div class="postcomment" *ngIf="!shComm">
-
-            <form [formGroup]="form1" *ngIf="question?.userId!==userId">
-                <div><textarea name="" id="" cols="100" rows="10" placeholder="Add Comment Here"
-                        formControlName="Description"> </textarea></div>
-                <div><button class="the-btn" (click)="addComment()">Add Comment</button></div>
-            </form>
-        </div> -->
 
     </div>
 

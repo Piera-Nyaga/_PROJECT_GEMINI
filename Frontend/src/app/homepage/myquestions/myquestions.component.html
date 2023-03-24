@@ -6,15 +6,11 @@
         </div>
 
         <div class="description">
-            <p>{{one.Description}}</p>
+            <p>{{one.Description | shorten:20...}}</p>
         </div>
 
         <div class="metadata">
-
-            <div class="answer">10 Answers</div>
-            <div class="user">
-                <h4> Jane Doe </h4>
-            </div>
+            
             <div class="time">{{one.createdAt | date}} </div>
 
         </div>

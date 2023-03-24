@@ -6,30 +6,32 @@ import { DatabaseHelper } from '../Databasehelpers/index'
 import { sqlConfig } from '../Config/config'
 import mssql from 'mssql'
 import { AddCommentSchema } from '../Helpers/validateComment'
+import { DecodedData } from '../Models'
 
 const _db = new DatabaseHelper()
 dotenv.config({ path: path.resolve(__dirname, '../../.env') })
 
 interface ExtendedRequest extends Request {
     body: {Description: string, userId: string, answerId: string}
+    info:DecodedData
 }
 
 
 //POST COMMENT
 export async function addComment(req: ExtendedRequest, res: Response) {
     try {
+        if(req.info){
         const id = uid()
-        console.log(req.body);
         const createdAt: string = new Date().toISOString()
         const {Description, userId, answerId } = req.body
         const{error} =AddCommentSchema.validate(req.body)
-    
+        
         if (error) {
             return res.status(422).json(error)
         }
-        await _db.exec('addComment ', { id: id, Description, userId, answerId, createdAt })
+        await _db.exec('addComment ', { id: id, Description, userId:req.info.Id, answerId:answerId, createdAt })
         return res.status(201).json({ message: 'Comment added' })
-    }
+    }}
     catch (error) {
         res.status(500).json(error)
     }

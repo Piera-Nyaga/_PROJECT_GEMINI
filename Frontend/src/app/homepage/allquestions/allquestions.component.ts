@@ -7,13 +7,15 @@ import { QuestionService } from '../../Services/QuestionsService/questionservice
 import { ActivatedRoute, Router, RouterModule } from '@angular/router';
 import { AppState } from 'src/app/app.state';
 import { allQuestions } from 'src/app/States/Reducers/question.reducer';
+import { ShortenPipe } from "../../shorten.pipe";
+
 
 @Component({
-  selector: 'app-allquestions',
-  standalone: true,
-  imports: [CommonModule, RouterModule],
-  templateUrl: './allquestions.component.html',
-  styleUrls: ['./allquestions.component.css']
+    selector: 'app-allquestions',
+    standalone: true,
+    templateUrl: './allquestions.component.html',
+    styleUrls: ['./allquestions.component.css'],
+    imports: [CommonModule, RouterModule, ShortenPipe]
 })
 export class AllquestionsComponent {
 
@@ -35,9 +37,6 @@ ngOnInit(): void {
 getOneQuiz(){
   this.store.dispatch(loadSingleQuestionId({id:this.id})) 
 }
-// getOneQuiz(id:string){
-//   this.questionService.getOneQuiz(id)
-// }
 }
 
 

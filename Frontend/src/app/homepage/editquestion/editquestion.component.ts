@@ -5,7 +5,7 @@ import { ActivatedRoute, Params, Router, RouterModule } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { AppState } from 'src/app/app.state';
 import { loadSingleQuestionId, updatequestion } from 'src/app/States/Actions/questions.action';
-import { allQuestions, getOneQuestion } from 'src/app/States/Reducers/question.reducer';
+import { allQuestions, getOneQuestion, myQuestions } from 'src/app/States/Reducers/question.reducer';
 import { addQuestion, Questions } from '../../Interfaces/question';
 import { QuestionService } from '../../Services/QuestionsService/questionservice';
 
@@ -69,13 +69,10 @@ export class EditquestionComponent {
 
   updateQuiz() {
     this.store.dispatch(updatequestion({id:this.id, updatedQuestion:this.form.value}))
-    this.store.select(allQuestions).subscribe((questions)=>
+    this.store.select(myQuestions).subscribe((questions)=>
     this.questions=questions)
     this.router.navigate(['/home/myquestions'])
 
-    // let question:Questions={...this.question, ...this.form.value}
-    // this.questionService.updateQuiz(this.question!.Id, question)
-    // this.router.navigate(['../../'],{relativeTo:this.route})
 
   }
 

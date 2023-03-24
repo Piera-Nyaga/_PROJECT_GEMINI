@@ -1,7 +1,7 @@
 import { RequestHandler, Request, Response } from 'express'
 import { v4 as uid } from 'uuid'
 import { PostingSchema, UpdateSchema } from '../Helpers/validateQuiz'
-import { Decoded, Question } from '../Models/index'
+import { DecodedData, Question } from '../Models/index'
 import dotenv from 'dotenv'
 import path from 'path'
 import { DatabaseHelper } from '../Databasehelpers/index'
@@ -12,7 +12,7 @@ const _db = new DatabaseHelper()
 dotenv.config({ path: path.resolve(__dirname, '../../.env') })
 
 interface ExtendedRequest extends Request {
-    info?: Decoded
+    info?: DecodedData
     body: { Title: string, Description: string, Code: string, userId: string }
 }
 

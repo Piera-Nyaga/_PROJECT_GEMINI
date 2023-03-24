@@ -7,13 +7,14 @@ import { loadSingleQuestionId, loadUserQuestions } from 'src/app/States/Actions/
 import { AppState } from 'src/app/app.state';
 import { Store } from '@ngrx/store';
 import { myQuestions } from 'src/app/States/Reducers/question.reducer';
+import { ShortenPipe } from "../../shorten.pipe";
 
 @Component({
-  selector: 'app-myquestions',
-  standalone: true,
-  imports: [CommonModule, RouterModule],
-  templateUrl: './myquestions.component.html',
-  styleUrls: ['./myquestions.component.css']
+    selector: 'app-myquestions',
+    standalone: true,
+    templateUrl: './myquestions.component.html',
+    styleUrls: ['./myquestions.component.css'],
+    imports: [CommonModule, RouterModule, ShortenPipe]
 })
 export class MyquestionsComponent implements OnInit{
   questions:Questions[]=[]
@@ -29,20 +30,8 @@ ngOnInit(): void {
   this.store.select(myQuestions).subscribe((questions)=>
   this.questions=questions)
 
-//   this.questionService.getmyQuiz().subscribe((questions)=>{
-//     this.questions=questions
-//     console.log("quesions",this.questions);
-//   })
-//   this.route.params.subscribe((params:Params)=>{
-//     this.questionService.getmyQuiz().subscribe((questions)=>{
-//       this.questions=questions  
-//     })    
-// })
 }
 getOneQuiz(){
   this.store.dispatch(loadSingleQuestionId({id:this.id})) 
 }
-// getOneQuiz(id:string){
-//   this.questionService.getOneQuiz(id)
-// }
 }

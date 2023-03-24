@@ -36,8 +36,9 @@ export const allQuestions= createSelector(questionSliceState, state=>state.quest
 export const myQuestions= createSelector(questionSliceState, state=>state.userQuestions)
 
 const oneQuestion= createSelector(questionSliceState, state=>state.questionId)
-export const fullquestion=createSelector(questionSliceState, state=>state.singleQuestion)
+// export const fullquestion=createSelector(questionSliceState, state=>state.singleQuestion)
 export const getSingleQuestion =createSelector(questionSliceState, state=>state.singleQuestion)
+
 export const getOneQuestion=createSelector(allQuestions,oneQuestion,(state,id)=>{
 return state.find(z=>z.Id==id)
 })

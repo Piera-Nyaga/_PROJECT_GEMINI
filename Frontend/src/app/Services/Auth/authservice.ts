@@ -8,40 +8,42 @@ import { User } from 'src/app/Interfaces/user';
 })
 export class AuthService {
 
-  constructor(private router:Router) { }
+  constructor(private router: Router) { }
 
-  isLoggedIn=false
-  // private role=''
-  // private UserName=''
+  isLoggedIn = false
+  private role = ''
+  private UserName = ''
 
-  // getName(){
-  //   return this.UserName
-  //   }
-  
-  // getRole(){
-  //     return this.role
-  //     }
-  
+  getName() {
+    return this.UserName
+  }
 
-  getAuthStatus():Promise<boolean>{
-    const promise = new Promise<boolean>((resolve,reject)=>{
-    setTimeout(()=>{
-      resolve(this.isLoggedIn)
-    },10)
+  getRole() {
+    return this.role
+  }
+
+  setRole(role: string) {
+    this.role = role
+  }
+
+  getAuthStatus(): Promise<boolean> {
+    const promise = new Promise<boolean>((resolve, reject) => {
+      setTimeout(() => {
+        resolve(this.isLoggedIn)
+      }, 10)
     })
     return promise;
   }
 
-  login(){
-    this.isLoggedIn=true;
+  login() {
+    this.isLoggedIn = true;
     this.router.navigate(['/home'])
 
   }
 
-  logout(){
-    this.isLoggedIn=false;
+  logout() {
+    this.isLoggedIn = false;
   }
 
 }
 
-  

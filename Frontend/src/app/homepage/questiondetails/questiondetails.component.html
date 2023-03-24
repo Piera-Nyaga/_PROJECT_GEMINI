@@ -2,87 +2,97 @@
 
     <div class="section-1">
 
-        <div>
-            <h3>{{question.Title}}</h3>
+        <div class="title">
+
+            <div>
+                <h3>{{question?.Title}}</h3>
+            </div>
+
+            <div>
+                <h2 *ngIf="!shqQuiz" (click)="ShowQuestion()"> <button class="the-btn">+</button> </h2>
+                <h2 *ngIf="shqQuiz" (click)="ShowQuestion()"> <button class="the-btn">-</button> </h2>
+            </div>
         </div>
-        <div>
-            <h2 *ngIf="!shqQuiz" (click)="ShowQuestion()"> <button>+</button> </h2>
-            <h2 *ngIf="shqQuiz" (click)="ShowQuestion()"> <button>-</button> </h2>
+
+        <div class="description">
+            <p>{{question?.Description}}
+            </p>
+        </div>
+
+        <div class="code">
+            <p>{{question?.Code}}
+            </p>
+        </div>
+
+        <div class="metadata">
+            <div class="answer">{{countAns?.length || 0}} Answers</div>
+
+            <div class="user">
+                    <h4> Posted by {{question?.UserName}}  On {{question?.createdAt | date: 'shortDate'}} </h4>
+            </div>
+
         </div>
 
     </div>
 
     <div class="shoUp" *ngIf="shqQuiz">
-
-        <div class="info">
-
-            <div class="description">
-                <p>{{question.Description}}
-                </p>
-            </div>
-
-            <div class="metadata">
-
-                <div class="answer">10 Answers</div>
-                <div class="user">
-                    <h4> Jane Doe </h4>
-                </div>
-                <div class="time">{{question.createdAt | date}} </div>
-
-            </div>
-
-        </div>
-
-
+        
         <div class="answer" *ngIf="shqQuiz">
 
             <div class="meta">
                 <div>
-                    <p>Answer</p>
-                </div>
-                <div>
-                    <p>10 votes</p>
+                    <p>Answers</p>
                 </div>
             </div>
 
-            <div class="theanswer">
+            <div class="theanswer" *ngFor="let answer of answers">
 
                 <div class="votes">
-                    <div class="upvote"> <i class="fa-solid fa-arrow-up"></i> </div>
+                    <div class="upvote"> <a href=""> <i class="fa-solid fa-arrow-up"></i> </a> </div>
                     <div class="number"> 10 </div>
-                    <div class="downvote"> <i class="fa-solid fa-arrow-down"></i> </div>
-                </div>
-
-                <div class="mainans">
-                    <div class="" *ngFor="let answer of answers">
-                        <p>{{answer.Description}}</p>
-                    </div>
-                    <div>
-                        <button>Mark as Preferred</button>
-                    </div>
+                    <div class="downvote"> <a href=""> <i class="fa-solid fa-arrow-down"></i> </a></div>
                 </div>
 
                 <div>
-                    <h2 class="answer-minus" *ngIf="!shAnsw" (click)="showAnswer()"> <button>+</button> </h2>
-                    <h2 class="answer-minus" *ngIf="shAnsw" (click)="showAnswer()"> <button>-</button> </h2>
+                    <p> {{answer.Description}}</p>
+                </div>
+
+                <!-- <div>
+                    <h2 class="answer-minus" *ngIf="!shAnsw" (click)="showAnswer()"> <button
+                            class="the-btn">Comments</button>
+                    </h2>
+                    <h2 class="answer-minus" *ngIf="shAnsw" (click)="showAnswer()"> <button
+                            class="the-btn">Close</button>
+                    </h2>
+                </div> -->
+
+                <div class="comment" *ngIf="shAnsw">
+                    <div class="head">
+                        <p>Comment</p>
+                    </div>
+
+                    <div *ngFor="let comment of comments">
+                        <p> {{comment.Description}}</p>
+                    </div>
+
+                    <div>
+                        <h2 class="answer-minus" *ngIf="shComm" (click)="showComment()"> <button class="the-btn">Add
+                                Comment</button>
+                        </h2>
+                        <h2 class="answer-minus" *ngIf="!shComm" (click)="showComment()"> <button
+                                class="the-btn">Close</button>
+                        </h2>
+
+                    </div>
+                    
                 </div>
 
             </div>
 
         </div>
 
-        <div class="comment" *ngIf="shAnsw">
-            <div class="head">
-                <p>Comment</p>
-            </div>
-
-            <div *ngFor="let comment of comments">
-                <p> {{comment.Description}}</p>
-            </div>
-
-        </div>
-
-        <button (click)="Update()">UPDATE</button>
-        <button (click)="Delete()">DELETE</button>
-
     </div>
+    <button (click)="Update()">UPDATE</button>
+    <button (click)="Delete()">DELETE</button>
+
+</div>

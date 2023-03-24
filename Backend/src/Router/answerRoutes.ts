@@ -7,6 +7,6 @@ const answerroute =Router()
 answerroute.post('/post',VerifyToken,postAnswer)
 answerroute.get('/allanswers',getallAnswers)
 // answerroute.get('/answer/:id',getoneAnswer)
-// answerroute.patch('/preferred/:id', approveAnswer)
+answerroute.patch('/preferred/:id',VerifyToken, approveAnswer)
 
 export default answerroute

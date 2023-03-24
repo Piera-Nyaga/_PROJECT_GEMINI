@@ -6,14 +6,14 @@ import { DatabaseHelper } from '../Databasehelpers/index'
 import { sqlConfig } from '../Config/config'
 import mssql from 'mssql'
 import { AddAnswerSchema } from '../Helpers/validateAnswer'
-import { Answer, Decoded } from '../Models'
+import { Answer, DecodedData } from '../Models'
 
 const _db = new DatabaseHelper()
 dotenv.config({ path: path.resolve(__dirname, '../../.env') })
 
 interface ExtendedRequest extends Request {
     body: {Description: string, userId: string, questionId: string }
-    info?: Decoded
+    info?: DecodedData
     
 
 }
@@ -75,7 +75,7 @@ export const approveAnswer = async (req: ExtendedRequest, res: Response) => {
         const id = req.params.id
         const {questionId}= req.body
         
-        const answer= await (await _db.exec('getAnswerbyId', { id })).recordset[0]
+        const answer= await (await _db.exec('getAnswerbyId', { id, questionId:questionId })).recordset[0]
         
             if (answer) {
                 await _db.exec('markPreferred', { id: req.params.id })
